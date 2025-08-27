@@ -9,6 +9,7 @@ public interface IProjectAnalysisService
     Task<FileAnalysisResult> AnalyzeFileAsync(string filePath, CancellationToken cancellationToken = default);
     Task<IEnumerable<SymbolInfo>> GetSymbolsAsync(string projectName, SymbolKind? symbolKind = null, CancellationToken cancellationToken = default);
     Task<IEnumerable<ReferenceInfo>> FindReferencesAsync(string symbol, string? projectName = null, CancellationToken cancellationToken = default);
+    Task<IEnumerable<ImplementationInfo>> FindImplementationsAsync(string interfaceName, string? projectName = null, CancellationToken cancellationToken = default);
 
     Task InvalidateCacheAsync(string? projectName = null);
 }
@@ -75,4 +76,18 @@ public enum ReferenceKind
     Definition,
     Reference,
     Implementation
+}
+
+public class ImplementationInfo
+{
+    public string InterfaceName { get; set; } = string.Empty;
+    public string ImplementingClass { get; set; } = string.Empty;
+    public string ImplementingClassFullName { get; set; } = string.Empty;
+    public string FilePath { get; set; } = string.Empty;
+    public int Line { get; set; }
+    public int Column { get; set; }
+    public string Namespace { get; set; } = string.Empty;
+    public bool IsAbstract { get; set; }
+    public bool IsPublic { get; set; }
+    public IEnumerable<string> ImplementedInterfaces { get; set; } = [];
 }

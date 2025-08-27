@@ -39,6 +39,7 @@ A Model Context Protocol (MCP) server that provides C# code analysis tools using
 | **AnalyzeFile** | Analyzes a specific file and returns detailed information about symbols, diagnostics, and structure | `filePath` |
 | **GetSymbols** | Gets all symbols of a specified kind from a project | `projectName`, `symbolKind` (optional: Class, Method, Property, Field, etc.) |
 | **FindReferences** | Finds all references to a symbol across the loaded workspace | `symbol`, `projectName` (optional) |
+| **FindImplementations** | Finds all implementations of an interface across the loaded workspace | `interfaceName`, `projectName` (optional) |
 | **GetDiagnostics** | Gets compiler diagnostics (errors, warnings, info) for a project or all projects | `projectName` (optional) |
 | **GetWorkspaceStatus** | Gets the current workspace status including loaded projects and their basic information | None |
 | **ClearWorkspace** | Clears the current workspace and invalidates all caches | None |

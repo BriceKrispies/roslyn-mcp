@@ -270,6 +270,106 @@ public class ProjectAnalysisService : IProjectAnalysisService
         return references;
     }
 
+    public async Task<IEnumerable<ImplementationInfo>> FindImplementationsAsync(string interfaceName, string? projectName = null, CancellationToken cancellationToken = default)
+    {
+        var implementations = new List<ImplementationInfo>();
+        var projects = string.IsNullOrEmpty(projectName)
+            ? await _workspaceService.GetProjectsAsync(cancellationToken)
+            : new[] { await _workspaceService.GetProjectByNameAsync(projectName, cancellationToken) }.Where(p => p != null).Cast<Project>();
+
+        foreach (var project in projects)
+        {
+            try
+            {
+                var compilation = await project.GetCompilationAsync(cancellationToken);
+                if (compilation == null) continue;
+
+                // Find the interface symbol by searching through source files
+                INamedTypeSymbol? interfaceSymbol = null;
+                
+                // First try metadata lookup for full names
+                interfaceSymbol = compilation.GetTypeByMetadataName(interfaceName);
+                
+                if (interfaceSymbol == null)
+                {
+                    // Search through all source files for interface declarations
+                    foreach (var document in project.Documents)
+                    {
+                        var semanticModel = await document.GetSemanticModelAsync(cancellationToken);
+                        var syntaxTree = await document.GetSyntaxTreeAsync(cancellationToken);
+                        if (semanticModel == null || syntaxTree == null) continue;
+
+                        var root = await syntaxTree.GetRootAsync(cancellationToken);
+                        var interfaceDeclarations = root.DescendantNodes()
+                            .OfType<Microsoft.CodeAnalysis.CSharp.Syntax.InterfaceDeclarationSyntax>()
+                            .Where(i => i.Identifier.ValueText == interfaceName);
+
+                        foreach (var interfaceDecl in interfaceDeclarations)
+                        {
+                            interfaceSymbol = semanticModel.GetDeclaredSymbol(interfaceDecl) as INamedTypeSymbol;
+                            if (interfaceSymbol != null) break;
+                        }
+                        if (interfaceSymbol != null) break;
+                    }
+                }
+
+                if (interfaceSymbol == null) continue;
+
+                // Now find all classes that implement this interface
+                foreach (var document in project.Documents)
+                {
+                    var semanticModel = await document.GetSemanticModelAsync(cancellationToken);
+                    var syntaxTree = await document.GetSyntaxTreeAsync(cancellationToken);
+                    if (semanticModel == null || syntaxTree == null) continue;
+
+                    var root = await syntaxTree.GetRootAsync(cancellationToken);
+                    var classDeclarations = root.DescendantNodes()
+                        .OfType<Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax>();
+
+                    foreach (var classDecl in classDeclarations)
+                    {
+                        var classSymbol = semanticModel.GetDeclaredSymbol(classDecl) as INamedTypeSymbol;
+                        if (classSymbol == null) continue;
+
+                        // Check if this class implements the interface
+                        var implementsInterface = classSymbol.AllInterfaces.Any(i => 
+                            SymbolEqualityComparer.Default.Equals(i, interfaceSymbol) ||
+                            i.Name == interfaceName ||
+                            i.ToDisplayString().Contains(interfaceName));
+
+                        if (implementsInterface)
+                        {
+                            var location = classDecl.GetLocation().GetLineSpan();
+                            implementations.Add(new ImplementationInfo
+                            {
+                                InterfaceName = interfaceName,
+                                ImplementingClass = classSymbol.Name,
+                                ImplementingClassFullName = classSymbol.ToDisplayString(),
+                                FilePath = document.FilePath ?? string.Empty,
+                                Line = location.StartLinePosition.Line + 1,
+                                Column = location.StartLinePosition.Character + 1,
+                                Namespace = classSymbol.ContainingNamespace?.ToDisplayString() ?? string.Empty,
+                                IsAbstract = classSymbol.IsAbstract,
+                                IsPublic = classSymbol.DeclaredAccessibility == Accessibility.Public,
+                                ImplementedInterfaces = classSymbol.AllInterfaces.Select(i => i.ToDisplayString()).ToList()
+                            });
+
+                            _logger.LogDebug("Found implementation: {ClassName} implements {InterfaceName}", 
+                                classSymbol.Name, interfaceName);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex, "Failed to analyze project for implementations: {ProjectName}", project.Name);
+            }
+        }
+
+        _logger.LogInformation("Found {Count} implementations of {InterfaceName}", implementations.Count, interfaceName);
+        return implementations;
+    }
+
     public async Task InvalidateCacheAsync(string? projectName = null)
     {
         if (string.IsNullOrEmpty(projectName))

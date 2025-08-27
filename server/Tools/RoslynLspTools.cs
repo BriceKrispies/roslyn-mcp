@@ -288,6 +288,40 @@ public class RoslynLspTools
         }
     }
 
+    [McpServerTool, Description("Finds all implementations of an interface across the loaded workspace. Optional projectName to limit scope.")]
+    public async Task<string> FindImplementations(string interfaceName, string? projectName = null)
+    {
+        try
+        {
+            _logger.LogInformation("Finding implementations for interface: {InterfaceName} in project: {ProjectName}", interfaceName, projectName ?? "all");
+            
+            var implementations = await _analysisService.FindImplementationsAsync(interfaceName, projectName);
+            
+            return JsonConvert.SerializeObject(new
+            {
+                interfaceName,
+                projectName = projectName ?? "all",
+                implementationCount = implementations.Count(),
+                implementations = implementations.Select(impl => new
+                {
+                    implementingClass = impl.ImplementingClass,
+                    implementingClassFullName = impl.ImplementingClassFullName,
+                    filePath = impl.FilePath,
+                    location = $"{impl.Line}:{impl.Column}",
+                    @namespace = impl.Namespace,
+                    isAbstract = impl.IsAbstract,
+                    isPublic = impl.IsPublic,
+                    allImplementedInterfaces = impl.ImplementedInterfaces.ToList()
+                }).ToList()
+            }, Formatting.Indented);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error finding implementations for interface: {InterfaceName}", interfaceName);
+            return JsonConvert.SerializeObject(new { success = false, error = ex.Message });
+        }
+    }
+
     [McpServerTool, Description("Gets compiler diagnostics (errors, warnings, info) for a project or all projects if projectName is not specified.")]
     public async Task<string> GetDiagnostics(string? projectName = null)
     {
