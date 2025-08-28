@@ -279,6 +279,8 @@ public class CallGraphService : ICallGraphService
 
                 // Classify the call type
                 var callType = ClassifyCallType(invokedSymbol, invocation, semanticModel);
+                _logger.LogInformation("🔍 CALL CLASSIFICATION: {Method} -> Type: '{Type}', Handler: '{Handler}', Operation: '{Operation}'", 
+                    invokedSymbol.Name, callType.Type ?? "null", callType.TargetHandler ?? "null", callType.Operation ?? "null");
                 calleeInfo.CallType = callType.Type;
                 calleeInfo.TargetHandler = callType.TargetHandler;
                 calleeInfo.Operation = callType.Operation;
@@ -311,6 +313,18 @@ public class CallGraphService : ICallGraphService
                     {
                         await FindCalleesRecursiveAsync(methodDecl, semanticModel, callees, databaseOps, externalCalls, visited, maxDepth, currentDepth + 1, limit, cancellationToken);
                     }
+                }
+                
+                // ENHANCED: For MediatR calls, ALWAYS follow the handler (changed from else if to if)
+                if (callType.Type == "MediatR" && !string.IsNullOrEmpty(callType.TargetHandler))
+                {
+                    _logger.LogInformation("🚀 FOLLOWING MEDIATR HANDLER: {TargetHandler} from {Method} at depth {Depth}", callType.TargetHandler, invokedSymbol.Name, currentDepth);
+                    await FollowMediatRHandlerAsync(callType.TargetHandler, callees, databaseOps, externalCalls, visited, maxDepth, currentDepth + 1, limit, cancellationToken);
+                    _logger.LogInformation("✅ COMPLETED MEDIATR HANDLER: {TargetHandler}", callType.TargetHandler);
+                }
+                else if (callType.Type == "MediatR")
+                {
+                    _logger.LogWarning("⚠️ MEDIATR CALL BUT NO HANDLER: Type='{Type}', Handler='{Handler}'", callType.Type, callType.TargetHandler ?? "null");
                 }
             }
             catch (Exception ex)
@@ -390,8 +404,10 @@ public class CallGraphService : ICallGraphService
                     _logger.LogWarning(ex, "Failed to find handler for request: {RequestType}", requestTypeName);
                 }
                 
-                // Fallback to request type name if handler not found
-                return requestTypeName;
+                // Fallback: use naming convention (Command -> CommandHandler)
+                var handlerName = requestTypeName + "Handler";
+                _logger.LogInformation("🔧 FALLBACK: {RequestType} -> {HandlerName}", requestTypeName, handlerName);
+                return handlerName;
             }
         }
 
@@ -514,5 +530,95 @@ public class CallGraphService : ICallGraphService
     private IEnumerable<string> BuildCallChain(ISymbol caller, ISymbol target)
     {
         return [$"{caller.ContainingType.Name}.{caller.Name} → {target.ContainingType.Name}.{target.Name}"];
+    }
+
+    private async Task FollowMediatRHandlerAsync(string handlerName, List<CalleeInfo> callees, List<DatabaseOperation> databaseOps, List<ExternalCall> externalCalls, HashSet<ISymbol> visited, int maxDepth, int currentDepth, int limit, CancellationToken cancellationToken)
+    {
+        if (currentDepth >= maxDepth || callees.Count >= limit) return;
+
+        try
+        {
+            _logger.LogDebug("Following MediatR handler: {HandlerName} at depth {Depth}", handlerName, currentDepth);
+
+            // Try to find the handler mapping
+            // Note: handlerName is like "ProcessUserActionCommandHandler", but we need to search by request name
+            var requestName = handlerName.EndsWith("Handler") ? handlerName[..^7] : handlerName; // Remove "Handler" suffix
+            _logger.LogInformation("🔍 SEARCHING MAPPING: Handler '{HandlerName}' -> Request '{RequestName}'", handlerName, requestName);
+            var mapping = await _mediatRMappingService.FindHandlerForRequestAsync(requestName, cancellationToken);
+            if (mapping == null)
+            {
+                _logger.LogDebug("No mapping found for MediatR handler: {HandlerName}", handlerName);
+                return;
+            }
+
+            // ENHANCED: If file path is empty, try to find handler by type name
+            Document? handlerDocument = null;
+            if (!string.IsNullOrEmpty(mapping.HandlerFilePath))
+            {
+                handlerDocument = await _workspaceService.GetDocumentAsync(mapping.HandlerFilePath, cancellationToken);
+            }
+            
+            // Fallback: Search for handler by type name across all projects
+            if (handlerDocument == null)
+            {
+                _logger.LogDebug("Searching for handler {HandlerType} by type name across projects", mapping.HandlerType);
+                var projects = await _workspaceService.GetProjectsAsync(cancellationToken);
+                
+                foreach (var project in projects)
+                {
+                    try
+                    {
+                        var compilation = await project.GetCompilationAsync(cancellationToken);
+                        if (compilation == null) continue;
+
+                        // Search for the handler class in this project
+                        var handlerSymbol = compilation.GetSymbolsWithName(name => name == mapping.HandlerType, SymbolFilter.Type).FirstOrDefault();
+                        if (handlerSymbol is INamedTypeSymbol namedType)
+                        {
+                            var syntaxRefs = namedType.DeclaringSyntaxReferences;
+                            if (syntaxRefs.Length > 0)
+                            {
+                                handlerDocument = project.GetDocument(syntaxRefs[0].SyntaxTree);
+                                if (handlerDocument != null)
+                                {
+                                    _logger.LogDebug("Found handler {HandlerType} in document {DocumentName}", mapping.HandlerType, handlerDocument.Name);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogWarning(ex, "Error searching for handler in project {ProjectName}", project.Name);
+                    }
+                }
+            }
+
+            if (handlerDocument == null)
+            {
+                _logger.LogDebug("Handler document not found for: {HandlerType}", mapping.HandlerType);
+                return;
+            }
+
+            var handlerSemanticModel = await handlerDocument.GetSemanticModelAsync(cancellationToken);
+            if (handlerSemanticModel == null) return;
+
+            var handlerRoot = await handlerSemanticModel.SyntaxTree.GetRootAsync(cancellationToken);
+            
+            // Find the Handle method in the handler
+            var handleMethods = handlerRoot.DescendantNodes()
+                .OfType<MethodDeclarationSyntax>()
+                .Where(m => m.Identifier.ValueText == "Handle");
+
+            foreach (var handleMethod in handleMethods)
+            {
+                _logger.LogDebug("Analyzing Handle method in {HandlerType}", mapping.HandlerType);
+                await FindCalleesRecursiveAsync(handleMethod, handlerSemanticModel, callees, databaseOps, externalCalls, visited, maxDepth, currentDepth, limit, cancellationToken);
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "Failed to follow MediatR handler: {HandlerName}", handlerName);
+        }
     }
 }

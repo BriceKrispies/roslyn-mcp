@@ -5,6 +5,7 @@ namespace mcp_server.Services;
 public interface IMediatRMappingService
 {
     Task BuildMappingsAsync(CancellationToken cancellationToken = default);
+    Task RebuildMappingsAsync(CancellationToken cancellationToken = default); // ADDED: Force rebuild
     Task<IEnumerable<HandlerMapping>> GetHandlerMappingsAsync(CancellationToken cancellationToken = default);
     Task<HandlerMapping?> FindHandlerForRequestAsync(string requestTypeName, CancellationToken cancellationToken = default);
     Task<IEnumerable<string>> FindRequestsForHandlerAsync(string handlerTypeName, CancellationToken cancellationToken = default);

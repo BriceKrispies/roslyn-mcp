@@ -287,8 +287,11 @@ public class ProjectAnalysisService : IProjectAnalysisService
                 // Find the interface symbol by searching through source files
                 INamedTypeSymbol? interfaceSymbol = null;
                 
+                _logger.LogInformation("Looking for interface: {InterfaceName}", interfaceName);
+                
                 // First try metadata lookup for full names
                 interfaceSymbol = compilation.GetTypeByMetadataName(interfaceName);
+                _logger.LogDebug("Metadata lookup result: {Found}", interfaceSymbol != null ? "Found" : "Not Found");
                 
                 if (interfaceSymbol == null)
                 {
@@ -310,6 +313,39 @@ public class ProjectAnalysisService : IProjectAnalysisService
                             if (interfaceSymbol != null) break;
                         }
                         if (interfaceSymbol != null) break;
+                    }
+                    _logger.LogDebug("Source file search result: {Found}", interfaceSymbol != null ? "Found" : "Not Found");
+                }
+                
+                // ENHANCED: If still not found, search for generic interfaces in referenced assemblies
+                if (interfaceSymbol == null && !interfaceName.Contains('<'))
+                {
+                    _logger.LogDebug("Searching for generic interface pattern: {InterfaceName}", interfaceName);
+                    
+                    // Look through all types in all assemblies for generic interfaces
+                    foreach (var assembly in compilation.SourceModule.ReferencedAssemblySymbols.Concat(new[] { compilation.Assembly }))
+                    {
+                        try
+                        {
+                            var globalNamespace = assembly.GlobalNamespace;
+                            var allTypes = GetAllTypes(globalNamespace);
+                            
+                            interfaceSymbol = allTypes.FirstOrDefault(t => 
+                                t.TypeKind == TypeKind.Interface && 
+                                (t.Name == interfaceName || 
+                                 (t.IsGenericType && t.ConstructedFrom?.Name == interfaceName)));
+                                 
+                            if (interfaceSymbol != null)
+                            {
+                                _logger.LogDebug("Found interface in assembly: {AssemblyName}, Interface: {InterfaceName}", 
+                                    assembly.Name, interfaceSymbol.ToDisplayString());
+                                break;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            _logger.LogWarning(ex, "Error searching assembly: {AssemblyName}", assembly.Name);
+                        }
                     }
                 }
 
@@ -333,9 +369,20 @@ public class ProjectAnalysisService : IProjectAnalysisService
 
                         // Check if this class implements the interface
                         var implementsInterface = classSymbol.AllInterfaces.Any(i => 
-                            SymbolEqualityComparer.Default.Equals(i, interfaceSymbol) ||
+                        {
+                            // Log all interfaces for debugging
+                            _logger.LogDebug("Checking interface: {InterfaceName} (Generic: {IsGeneric}, ConstructedFrom: {ConstructedFrom})", 
+                                i.ToDisplayString(), i.IsGenericType, i.IsGenericType ? i.ConstructedFrom?.Name : "N/A");
+                            
+                            return SymbolEqualityComparer.Default.Equals(i, interfaceSymbol) ||
                             i.Name == interfaceName ||
-                            i.ToDisplayString().Contains(interfaceName));
+                            // Handle generic interfaces like IRequestHandler<T,R> when searching for "IRequestHandler"
+                            (i.IsGenericType && i.ConstructedFrom?.Name == interfaceName) ||
+                            // Handle full generic names like "IRequestHandler<GetUsersQuery, UsersViewModel>"
+                            i.ToDisplayString() == interfaceName ||
+                            // Fallback: partial match for complex generic scenarios
+                            (interfaceName.Contains('<') && i.ToDisplayString().Contains(interfaceName.Split('<')[0]));
+                        });
 
                         if (implementsInterface)
                         {
@@ -368,6 +415,41 @@ public class ProjectAnalysisService : IProjectAnalysisService
 
         _logger.LogInformation("Found {Count} implementations of {InterfaceName}", implementations.Count, interfaceName);
         return implementations;
+    }
+
+    private static IEnumerable<INamedTypeSymbol> GetAllTypes(INamespaceSymbol nameSpace)
+    {
+        foreach (var type in nameSpace.GetTypeMembers())
+        {
+            yield return type;
+            
+            // Recursively search nested types
+            foreach (var nestedType in GetAllNestedTypes(type))
+            {
+                yield return nestedType;
+            }
+        }
+
+        foreach (var childNamespace in nameSpace.GetNamespaceMembers())
+        {
+            foreach (var type in GetAllTypes(childNamespace))
+            {
+                yield return type;
+            }
+        }
+    }
+
+    private static IEnumerable<INamedTypeSymbol> GetAllNestedTypes(INamedTypeSymbol type)
+    {
+        foreach (var nestedType in type.GetTypeMembers())
+        {
+            yield return nestedType;
+            
+            foreach (var deeplyNestedType in GetAllNestedTypes(nestedType))
+            {
+                yield return deeplyNestedType;
+            }
+        }
     }
 
     public async Task InvalidateCacheAsync(string? projectName = null)

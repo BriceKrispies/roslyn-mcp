@@ -24,15 +24,16 @@ public class MediatRMappingService : IMediatRMappingService
 
     public async Task BuildMappingsAsync(CancellationToken cancellationToken = default)
     {
+        _logger.LogInformation("🔍 Starting MediatR mapping analysis...");
         if (_isMappingBuilt)
         {
-            _logger.LogDebug("MediatR mappings already built");
+            _logger.LogDebug("MediatR mappings already built - current count: {Count}", _mappings.Count);
             return;
         }
 
         _logger.LogInformation("Building MediatR handler mappings...");
 
-        var cacheKey = "mediatr_mappings_v1";
+        var cacheKey = "mediatr_mappings_v2"; // FIXED: Invalidate old cache to force fresh analysis
         var cachedMappings = await _cacheService.GetAsync<List<HandlerMapping>>(cacheKey, cancellationToken);
         
         if (cachedMappings != null)
@@ -73,6 +74,14 @@ public class MediatRMappingService : IMediatRMappingService
         
         _isMappingBuilt = true;
         _logger.LogInformation("Built {MappingCount} MediatR handler mappings", _mappings.Count);
+    }
+
+    public async Task RebuildMappingsAsync(CancellationToken cancellationToken = default)
+    {
+        _logger.LogInformation("🔄 Force rebuilding MediatR mappings...");
+        _isMappingBuilt = false; // Reset the flag
+        _mappings.Clear(); // Clear existing mappings
+        await BuildMappingsAsync(cancellationToken);
     }
 
     public async Task<IEnumerable<HandlerMapping>> GetHandlerMappingsAsync(CancellationToken cancellationToken = default)
@@ -144,9 +153,10 @@ public class MediatRMappingService : IMediatRMappingService
         _logger.LogDebug("Found {TypeCount} source types in project {ProjectName}", sourceTypes.Count, project.Name);
 
         // Find all handler implementations
+        _logger.LogDebug("Analyzing {SourceTypeCount} source types in project {ProjectName}", sourceTypes.Count, project.Name);
         var handlers = sourceTypes.Where(IsRequestHandler).ToList();
         
-        _logger.LogInformation("Found {HandlerCount} MediatR handlers in project {ProjectName}", handlers.Count, project.Name);
+        _logger.LogInformation("✅ Found {HandlerCount} MediatR handlers in project {ProjectName}", handlers.Count, project.Name);
 
         foreach (var handler in handlers)
         {
@@ -181,8 +191,23 @@ public class MediatRMappingService : IMediatRMappingService
         }
         
         var isHandler = interfaces.Any(i => 
-            i.Name == "IRequestHandler" && 
-            i.ContainingNamespace?.ToDisplayString() == "MediatR");
+        {
+            var nameMatch = i.Name == "IRequestHandler";
+            var namespaceMatch = i.ContainingNamespace?.ToDisplayString() == "MediatR";
+            var isGeneric = i.IsGenericType;
+            
+            // ENHANCED: For generic interfaces, check the ConstructedFrom property
+            var genericNameMatch = isGeneric && i.ConstructedFrom?.Name == "IRequestHandler";
+            var genericNamespaceMatch = isGeneric && i.ConstructedFrom?.ContainingNamespace?.ToDisplayString() == "MediatR";
+            
+            var isHandlerInterface = (nameMatch && namespaceMatch) || (genericNameMatch && genericNamespaceMatch);
+            
+            _logger.LogDebug("    Interface: Name='{Name}', Namespace='{Namespace}', IsGeneric={IsGeneric}, ConstructedFrom='{ConstructedFrom}', IsHandler={IsHandler}", 
+                i.Name, i.ContainingNamespace?.ToDisplayString(), isGeneric, 
+                isGeneric ? i.ConstructedFrom?.Name : "N/A", isHandlerInterface);
+                
+            return isHandlerInterface;
+        });
             
         _logger.LogDebug("Type {TypeName} is handler: {IsHandler}", type.Name, isHandler);
         return isHandler;
@@ -247,8 +272,13 @@ public class MediatRMappingService : IMediatRMappingService
             if (handleMethod != null)
             {
                 var location = handleMethod.GetLocation().GetLineSpan();
+                var filePath = document.FilePath ?? syntaxRef.SyntaxTree.FilePath ?? "";
+                
+                _logger.LogDebug("Found Handle method in {HandlerType}: FilePath='{FilePath}', DocPath='{DocPath}', TreePath='{TreePath}'", 
+                    handlerType.Name, filePath, document.FilePath, syntaxRef.SyntaxTree.FilePath);
+                
                 return (
-                    document.FilePath ?? "",
+                    filePath,
                     location.StartLinePosition.Line + 1,
                     location.StartLinePosition.Character + 1
                 );

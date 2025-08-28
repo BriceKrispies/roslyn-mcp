@@ -33,470 +33,532 @@ public class RoslynLspTools
     [McpServerTool, Description("Loads a .NET solution and prepares it for analysis. Returns information about loaded projects.")]
     public async Task<string> LoadSolution(string solutionPath)
     {
-        try
-        {
-            _logger.LogInformation("Loading solution: {SolutionPath}", solutionPath);
-            
-            var success = await _workspaceService.LoadSolutionAsync(solutionPath);
-            if (!success)
+        return await ResponseBuilder
+            .ForOperation("LoadSolution", _logger)
+            .WithParameters(solutionPath)
+            .ExecuteAsync<object>(async () =>
             {
-                return JsonConvert.SerializeObject(new { success = false, error = "Failed to load solution" });
-            }
+                var success = await _workspaceService.LoadSolutionAsync(solutionPath);
+                if (!success)
+                {
+                    return new { success = false, error = "Failed to load solution" };
+                }
 
-            var projects = await _workspaceService.GetProjectsAsync();
-            var projectInfo = projects.Select(p => new
-            {
-                name = p.Name,
-                path = p.FilePath,
-                language = p.Language,
-                documentCount = p.Documents.Count()
-            }).ToList();
+                var projects = await _workspaceService.GetProjectsAsync();
+                var projectInfo = projects.Select(p => new
+                {
+                    name = p.Name,
+                    path = p.FilePath,
+                    language = p.Language,
+                    documentCount = p.Documents.Count()
+                }).ToList();
 
-            return JsonConvert.SerializeObject(new
-            {
-                success = true,
-                solutionPath,
-                projectCount = projectInfo.Count,
-                projects = projectInfo
-            }, Formatting.Indented);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error loading solution: {SolutionPath}", solutionPath);
-            return JsonConvert.SerializeObject(new { success = false, error = ex.Message });
-        }
+                return new
+                {
+                    success = true,
+                    solutionPath,
+                    projectCount = projectInfo.Count,
+                    projects = projectInfo
+                };
+            })
+            .ToJsonAsync();
     }
 
     [McpServerTool, Description("Loads a single .NET project and prepares it for analysis.")]
     public async Task<string> LoadProject(string projectPath)
     {
-        try
-        {
-            _logger.LogInformation("Loading project: {ProjectPath}", projectPath);
-            
-            var success = await _workspaceService.LoadProjectAsync(projectPath);
-            if (!success)
+        return await ResponseBuilder
+            .ForOperation("LoadProject", _logger)
+            .WithParameters(projectPath)
+            .ExecuteAsync<object>(async () =>
             {
-                return JsonConvert.SerializeObject(new { success = false, error = "Failed to load project" });
-            }
+                var success = await _workspaceService.LoadProjectAsync(projectPath);
+                if (!success)
+                {
+                    return new { success = false, error = "Failed to load project" };
+                }
 
-            var projectName = Path.GetFileNameWithoutExtension(projectPath);
-            var project = await _workspaceService.GetProjectByNameAsync(projectName);
-            
-            if (project == null)
-            {
-                return JsonConvert.SerializeObject(new { success = false, error = "Project not found after loading" });
-            }
+                var projectName = Path.GetFileNameWithoutExtension(projectPath);
+                var project = await _workspaceService.GetProjectByNameAsync(projectName);
+                
+                if (project == null)
+                {
+                    return new { success = false, error = "Project not found after loading" };
+                }
 
-            return JsonConvert.SerializeObject(new
-            {
-                success = true,
-                projectName = project.Name,
-                projectPath,
-                language = project.Language,
-                documentCount = project.Documents.Count(),
-                documents = project.Documents.Select(d => d.Name).ToList()
-            }, Formatting.Indented);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error loading project: {ProjectPath}", projectPath);
-            return JsonConvert.SerializeObject(new { success = false, error = ex.Message });
-        }
+                return new
+                {
+                    success = true,
+                    projectName = project.Name,
+                    projectPath,
+                    language = project.Language,
+                    documentCount = project.Documents.Count(),
+                    documents = project.Documents.Select(d => d.Name).ToList()
+                };
+            })
+            .ToJsonAsync();
     }
 
     [McpServerTool, Description("Analyzes a project and returns comprehensive analysis results including diagnostics, symbols, and metrics.")]
     public async Task<string> AnalyzeProject(string projectPath)
     {
-        try
-        {
-            _logger.LogInformation("Analyzing project: {ProjectPath}", projectPath);
-            
-            var result = await _analysisService.AnalyzeProjectAsync(projectPath);
-            
-            return JsonConvert.SerializeObject(new
+        return await ResponseBuilder
+            .ForOperation("AnalyzeProject", _logger)
+            .WithParameters(projectPath)
+            .ExecuteAsync<object>(async () =>
             {
-                projectName = result.ProjectName,
-                projectPath = result.ProjectPath,
-                totalLines = result.TotalLines,
-                sourceFileCount = result.SourceFiles.Count(),
-                dependencyCount = result.Dependencies.Count(),
-                diagnostics = result.Diagnostics.Select(d => new
+                var result = await _analysisService.AnalyzeProjectAsync(projectPath);
+                
+                return new
                 {
-                    id = d.Id,
-                    severity = d.Severity.ToString(),
-                    message = d.GetMessage(),
-                    location = d.Location.GetLineSpan().ToString()
-                }).ToList(),
-                sourceFiles = result.SourceFiles.ToList(),
-                dependencies = result.Dependencies.ToList(),
-                analyzedAt = result.AnalyzedAt
-            }, Formatting.Indented);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error analyzing project: {ProjectPath}", projectPath);
-            return JsonConvert.SerializeObject(new { success = false, error = ex.Message });
-        }
+                    projectName = result.ProjectName,
+                    projectPath = result.ProjectPath,
+                    totalLines = result.TotalLines,
+                    sourceFileCount = result.SourceFiles.Count(),
+                    dependencyCount = result.Dependencies.Count(),
+                    diagnostics = result.Diagnostics.Select(d => new
+                    {
+                        id = d.Id,
+                        severity = d.Severity.ToString(),
+                        message = d.GetMessage(),
+                        location = d.Location.GetLineSpan().ToString()
+                    }).ToList(),
+                    sourceFiles = result.SourceFiles.ToList(),
+                    dependencies = result.Dependencies.ToList(),
+                    analyzedAt = result.AnalyzedAt
+                };
+            })
+            .ToJsonAsync();
     }
 
     [McpServerTool, Description("Analyzes a solution and returns analysis for all projects within it.")]
     public async Task<string> AnalyzeSolution(string solutionPath)
     {
-        try
-        {
-            _logger.LogInformation("Analyzing solution: {SolutionPath}", solutionPath);
-            
-            var result = await _analysisService.AnalyzeSolutionAsync(solutionPath);
-            
-            return JsonConvert.SerializeObject(new
+        return await ResponseBuilder
+            .ForOperation("AnalyzeSolution", _logger)
+            .WithParameters(solutionPath)
+            .ExecuteAsync<object>(async () =>
             {
-                solutionName = result.SolutionName,
-                solutionPath = result.SolutionPath,
-                projectCount = result.Projects.Count(),
-                totalDiagnostics = result.AllDiagnostics.Count(),
-                projects = result.Projects.Select(p => new
+                var result = await _analysisService.AnalyzeSolutionAsync(solutionPath);
+                
+                return new
                 {
-                    name = p.ProjectName,
-                    path = p.ProjectPath,
-                    lines = p.TotalLines,
-                    files = p.SourceFiles.Count(),
-                    diagnostics = p.Diagnostics.Count(),
-                    dependencies = p.Dependencies.Count()
-                }).ToList(),
-                analyzedAt = result.AnalyzedAt
-            }, Formatting.Indented);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error analyzing solution: {SolutionPath}", solutionPath);
-            return JsonConvert.SerializeObject(new { success = false, error = ex.Message });
-        }
+                    solutionName = result.SolutionName,
+                    solutionPath = result.SolutionPath,
+                    projectCount = result.Projects.Count(),
+                    totalDiagnostics = result.AllDiagnostics.Count(),
+                    projects = result.Projects.Select(p => new
+                    {
+                        name = p.ProjectName,
+                        path = p.ProjectPath,
+                        lines = p.TotalLines,
+                        files = p.SourceFiles.Count(),
+                        diagnostics = p.Diagnostics.Count(),
+                        dependencies = p.Dependencies.Count()
+                    }).ToList(),
+                    analyzedAt = result.AnalyzedAt
+                };
+            })
+            .ToJsonAsync();
     }
 
     [McpServerTool, Description("Analyzes a specific file and returns detailed information about symbols, diagnostics, and structure.")]
     public async Task<string> AnalyzeFile(string filePath)
     {
-        try
-        {
-            _logger.LogInformation("Analyzing file: {FilePath}", filePath);
-            
-            var result = await _analysisService.AnalyzeFileAsync(filePath);
-            
-            return JsonConvert.SerializeObject(new
+        return await ResponseBuilder
+            .ForOperation("AnalyzeFile", _logger)
+            .WithParameters(filePath)
+            .ExecuteAsync<object>(async () =>
             {
-                filePath = result.FilePath,
-                projectName = result.ProjectName,
-                lineCount = result.LineCount,
-                symbolCount = result.Symbols.Count(),
-                diagnosticCount = result.Diagnostics.Count(),
-                symbols = result.Symbols.Select(s => new
+                var result = await _analysisService.AnalyzeFileAsync(filePath);
+                
+                return new
                 {
-                    name = s.Name,
-                    kind = s.Kind.ToString(),
-                    signature = s.Signature,
-                    location = $"{s.StartLine}:{s.StartColumn}-{s.EndLine}:{s.EndColumn}",
-                    isPublic = s.IsPublic,
-                    containingNamespace = s.ContainingNamespace,
-                    containingType = s.ContainingType
-                }).ToList(),
-                diagnostics = result.Diagnostics.Select(d => new
-                {
-                    id = d.Id,
-                    severity = d.Severity.ToString(),
-                    message = d.GetMessage(),
-                    location = d.Location.GetLineSpan().ToString()
-                }).ToList(),
-                analyzedAt = result.AnalyzedAt
-            }, Formatting.Indented);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error analyzing file: {FilePath}", filePath);
-            return JsonConvert.SerializeObject(new { success = false, error = ex.Message });
-        }
+                    filePath = result.FilePath,
+                    projectName = result.ProjectName,
+                    lineCount = result.LineCount,
+                    symbolCount = result.Symbols.Count(),
+                    diagnosticCount = result.Diagnostics.Count(),
+                    symbols = result.Symbols.Select(s => new
+                    {
+                        name = s.Name,
+                        kind = s.Kind.ToString(),
+                        signature = s.Signature,
+                        location = $"{s.StartLine}:{s.StartColumn}-{s.EndLine}:{s.EndColumn}",
+                        isPublic = s.IsPublic,
+                        containingNamespace = s.ContainingNamespace,
+                        containingType = s.ContainingType
+                    }).ToList(),
+                    diagnostics = result.Diagnostics.Select(d => new
+                    {
+                        id = d.Id,
+                        severity = d.Severity.ToString(),
+                        message = d.GetMessage(),
+                        location = d.Location.GetLineSpan().ToString()
+                    }).ToList(),
+                    analyzedAt = result.AnalyzedAt
+                };
+            })
+            .ToJsonAsync();
     }
 
     [McpServerTool, Description("Gets all symbols of a specified kind from a project. Optional symbolKind parameter (Class, Method, Property, Field, etc.).")]
     public async Task<string> GetSymbols(string projectName, string? symbolKind = null)
     {
-        try
-        {
-            _logger.LogInformation("Getting symbols for project: {ProjectName}, kind: {SymbolKind}", projectName, symbolKind ?? "all");
-            
-            SymbolKind? kind = null;
-            if (!string.IsNullOrEmpty(symbolKind) && Enum.TryParse<SymbolKind>(symbolKind, true, out var parsedKind))
+        return await ResponseBuilder
+            .ForOperation("GetSymbols", _logger)
+            .WithParameters(projectName, symbolKind)
+            .ExecuteAsync<object>(async () =>
             {
-                kind = parsedKind;
-            }
-
-            var symbols = await _analysisService.GetSymbolsAsync(projectName, kind);
-            
-            return JsonConvert.SerializeObject(new
-            {
-                projectName,
-                symbolKind = symbolKind ?? "all",
-                symbolCount = symbols.Count(),
-                symbols = symbols.Select(s => new
+                SymbolKind? kind = null;
+                if (!string.IsNullOrEmpty(symbolKind) && Enum.TryParse<SymbolKind>(symbolKind, true, out var parsedKind))
                 {
-                    name = s.Name,
-                    kind = s.Kind.ToString(),
-                    signature = s.Signature,
-                    filePath = s.FilePath,
-                    location = $"{s.StartLine}:{s.StartColumn}-{s.EndLine}:{s.EndColumn}",
-                    isPublic = s.IsPublic,
-                    containingNamespace = s.ContainingNamespace,
-                    containingType = s.ContainingType,
-                    documentation = string.IsNullOrEmpty(s.Documentation) ? null : s.Documentation
-                }).ToList()
-            }, Formatting.Indented);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error getting symbols for project: {ProjectName}", projectName);
-            return JsonConvert.SerializeObject(new { success = false, error = ex.Message });
-        }
+                    kind = parsedKind;
+                }
+
+                var symbols = await _analysisService.GetSymbolsAsync(projectName, kind);
+                
+                return new
+                {
+                    projectName,
+                    symbolKind = symbolKind ?? "all",
+                    symbolCount = symbols.Count(),
+                    symbols = symbols.Select(s => new
+                    {
+                        name = s.Name,
+                        kind = s.Kind.ToString(),
+                        signature = s.Signature,
+                        filePath = s.FilePath,
+                        location = $"{s.StartLine}:{s.StartColumn}-{s.EndLine}:{s.EndColumn}",
+                        isPublic = s.IsPublic,
+                        containingNamespace = s.ContainingNamespace,
+                        containingType = s.ContainingType,
+                        documentation = string.IsNullOrEmpty(s.Documentation) ? null : s.Documentation
+                    }).ToList()
+                };
+            })
+            .ToJsonAsync();
     }
 
     [McpServerTool, Description("Finds all references to a symbol across the loaded workspace. Optional projectName to limit scope.")]
     public async Task<string> FindReferences(string symbol, string? projectName = null)
     {
-        try
-        {
-            _logger.LogInformation("Finding references for symbol: {Symbol} in project: {ProjectName}", symbol, projectName ?? "all");
-            
-            var references = await _analysisService.FindReferencesAsync(symbol, projectName);
-            
-            return JsonConvert.SerializeObject(new
+        return await ResponseBuilder
+            .ForOperation("FindReferences", _logger)
+            .WithParameters(symbol, projectName)
+            .ExecuteAsync<object>(async () =>
             {
-                symbol,
-                projectName = projectName ?? "all",
-                referenceCount = references.Count(),
-                references = references.Select(r => new
+                var references = await _analysisService.FindReferencesAsync(symbol, projectName);
+                
+                return new
                 {
-                    filePath = r.FilePath,
-                    location = $"{r.Line}:{r.Column}",
-                    context = r.Context,
-                    kind = r.Kind.ToString()
-                }).ToList()
-            }, Formatting.Indented);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error finding references for symbol: {Symbol}", symbol);
-            return JsonConvert.SerializeObject(new { success = false, error = ex.Message });
-        }
+                    symbol,
+                    projectName = projectName ?? "all",
+                    referenceCount = references.Count(),
+                    references = references.Select(r => new
+                    {
+                        filePath = r.FilePath,
+                        location = $"{r.Line}:{r.Column}",
+                        context = r.Context,
+                        kind = r.Kind.ToString()
+                    }).ToList()
+                };
+            })
+            .ToJsonAsync();
     }
 
     [McpServerTool, Description("Finds all implementations of an interface across the loaded workspace. Optional projectName to limit scope.")]
     public async Task<string> FindImplementations(string interfaceName, string? projectName = null)
     {
-        try
-        {
-            _logger.LogInformation("Finding implementations for interface: {InterfaceName} in project: {ProjectName}", interfaceName, projectName ?? "all");
-            
-            var implementations = await _analysisService.FindImplementationsAsync(interfaceName, projectName);
-            
-            return JsonConvert.SerializeObject(new
+        return await ResponseBuilder
+            .ForOperation("FindImplementations", _logger)
+            .WithParameters(interfaceName, projectName)
+            .ExecuteAsync<object>(async () =>
             {
-                interfaceName,
-                projectName = projectName ?? "all",
-                implementationCount = implementations.Count(),
-                implementations = implementations.Select(impl => new
+                var implementations = await _analysisService.FindImplementationsAsync(interfaceName, projectName);
+                
+                return new
                 {
-                    implementingClass = impl.ImplementingClass,
-                    implementingClassFullName = impl.ImplementingClassFullName,
-                    filePath = impl.FilePath,
-                    location = $"{impl.Line}:{impl.Column}",
-                    @namespace = impl.Namespace,
-                    isAbstract = impl.IsAbstract,
-                    isPublic = impl.IsPublic,
-                    allImplementedInterfaces = impl.ImplementedInterfaces.ToList()
-                }).ToList()
-            }, Formatting.Indented);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error finding implementations for interface: {InterfaceName}", interfaceName);
-            return JsonConvert.SerializeObject(new { success = false, error = ex.Message });
-        }
+                    interfaceName,
+                    projectName = projectName ?? "all",
+                    implementationCount = implementations.Count(),
+                    implementations = implementations.Select(impl => new
+                    {
+                        implementingClass = impl.ImplementingClass,
+                        implementingClassFullName = impl.ImplementingClassFullName,
+                        filePath = impl.FilePath,
+                        location = $"{impl.Line}:{impl.Column}",
+                        @namespace = impl.Namespace,
+                        isAbstract = impl.IsAbstract,
+                        isPublic = impl.IsPublic,
+                        allImplementedInterfaces = impl.ImplementedInterfaces.ToList()
+                    }).ToList()
+                };
+            })
+            .ToJsonAsync();
     }
 
     [McpServerTool, Description("Gets compiler diagnostics (errors, warnings, info) for a project or all projects if projectName is not specified.")]
     public async Task<string> GetDiagnostics(string? projectName = null)
     {
-        try
-        {
-            _logger.LogInformation("Getting diagnostics for project: {ProjectName}", projectName ?? "all");
-            
-            var diagnostics = await _workspaceService.GetDiagnosticsAsync(projectName);
-            
-            var groupedDiagnostics = diagnostics
-                .GroupBy(d => d.Severity)
-                .ToDictionary(g => g.Key.ToString(), g => g.ToList());
-
-            return JsonConvert.SerializeObject(new
+        return await ResponseBuilder
+            .ForOperation("GetDiagnostics", _logger)
+            .WithParameters(projectName)
+            .ExecuteAsync<object>(async () =>
             {
-                projectName = projectName ?? "all",
-                totalCount = diagnostics.Count(),
-                summary = new
+                var diagnostics = await _workspaceService.GetDiagnosticsAsync(projectName);
+                
+                var groupedDiagnostics = diagnostics
+                    .GroupBy(d => d.Severity)
+                    .ToDictionary(g => g.Key.ToString(), g => g.ToList());
+
+                return new
                 {
-                    errors = groupedDiagnostics.GetValueOrDefault("Error", []).Count,
-                    warnings = groupedDiagnostics.GetValueOrDefault("Warning", []).Count,
-                    info = groupedDiagnostics.GetValueOrDefault("Info", []).Count,
-                    hidden = groupedDiagnostics.GetValueOrDefault("Hidden", []).Count
-                },
-                diagnostics = diagnostics.Select(d => new
-                {
-                    id = d.Id,
-                    severity = d.Severity.ToString(),
-                    message = d.GetMessage(),
-                    location = d.Location.IsInSource ? d.Location.GetLineSpan().ToString() : "External",
-                    filePath = d.Location.SourceTree?.FilePath
-                }).ToList()
-            }, Formatting.Indented);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error getting diagnostics for project: {ProjectName}", projectName);
-            return JsonConvert.SerializeObject(new { success = false, error = ex.Message });
-        }
+                    projectName = projectName ?? "all",
+                    totalCount = diagnostics.Count(),
+                    summary = new
+                    {
+                        errors = groupedDiagnostics.GetValueOrDefault("Error", []).Count,
+                        warnings = groupedDiagnostics.GetValueOrDefault("Warning", []).Count,
+                        info = groupedDiagnostics.GetValueOrDefault("Info", []).Count,
+                        hidden = groupedDiagnostics.GetValueOrDefault("Hidden", []).Count
+                    },
+                    diagnostics = diagnostics.Select(d => new
+                    {
+                        id = d.Id,
+                        severity = d.Severity.ToString(),
+                        message = d.GetMessage(),
+                        location = d.Location.IsInSource ? d.Location.GetLineSpan().ToString() : "External",
+                        filePath = d.Location.SourceTree?.FilePath
+                    }).ToList()
+                };
+            })
+            .ToJsonAsync();
     }
 
     [McpServerTool, Description("Gets the current workspace status including loaded projects and their basic information.")]
     public async Task<string> GetWorkspaceStatus()
     {
-        try
-        {
-            var isLoaded = await _workspaceService.IsWorkspaceLoadedAsync();
-            var currentSolutionPath = await _workspaceService.GetCurrentSolutionPathAsync();
-            
-            if (!isLoaded)
+        return await ResponseBuilder
+            .ForOperation("GetWorkspaceStatus", _logger)
+            .ExecuteAsync<object>(async () =>
             {
-                return JsonConvert.SerializeObject(new
+                var isLoaded = await _workspaceService.IsWorkspaceLoadedAsync();
+                var currentSolutionPath = await _workspaceService.GetCurrentSolutionPathAsync();
+                
+                if (!isLoaded)
                 {
-                    isLoaded = false,
-                    solutionPath = currentSolutionPath,
-                    message = "No workspace is currently loaded"
-                });
-            }
+                    return new
+                    {
+                        isLoaded = false,
+                        solutionPath = currentSolutionPath,
+                        message = "No workspace is currently loaded"
+                    };
+                }
 
-            var projects = await _workspaceService.GetProjectsAsync();
-            
-            return JsonConvert.SerializeObject(new
-            {
-                isLoaded = true,
-                solutionPath = currentSolutionPath,
-                projectCount = projects.Count(),
-                projects = projects.Select(p => new
+                var projects = await _workspaceService.GetProjectsAsync();
+                
+                return new
                 {
-                    name = p.Name,
-                    path = p.FilePath,
-                    language = p.Language,
-                    documentCount = p.Documents.Count(),
-                    hasCompilationErrors = p.GetCompilationAsync().Result?.GetDiagnostics().Any(d => d.Severity == DiagnosticSeverity.Error) ?? false
-                }).ToList()
-            }, Formatting.Indented);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error getting workspace status");
-            return JsonConvert.SerializeObject(new { success = false, error = ex.Message });
-        }
+                    isLoaded = true,
+                    solutionPath = currentSolutionPath,
+                    projectCount = projects.Count(),
+                    projects = projects.Select(p => new
+                    {
+                        name = p.Name,
+                        path = p.FilePath,
+                        language = p.Language,
+                        documentCount = p.Documents.Count(),
+                        hasCompilationErrors = p.GetCompilationAsync().Result?.GetDiagnostics().Any(d => d.Severity == DiagnosticSeverity.Error) ?? false
+                    }).ToList()
+                };
+            })
+            .ToJsonAsync();
     }
 
     [McpServerTool, Description("Clears the current workspace and invalidates all caches.")]
     public async Task<string> ClearWorkspace()
     {
-        try
-        {
-            _logger.LogInformation("Clearing workspace");
-            
-            await _workspaceService.ClearWorkspaceAsync();
-            await _analysisService.InvalidateCacheAsync();
-            
-            return JsonConvert.SerializeObject(new
+        return await ResponseBuilder
+            .ForOperation("ClearWorkspace", _logger)
+            .ExecuteAsync<object>(async () =>
             {
-                success = true,
-                message = "Workspace cleared and caches invalidated"
-            });
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error clearing workspace");
-            return JsonConvert.SerializeObject(new { success = false, error = ex.Message });
-        }
+                await _workspaceService.ClearWorkspaceAsync();
+                await _analysisService.InvalidateCacheAsync();
+                
+                return new
+                {
+                    success = true,
+                    message = "Workspace cleared and caches invalidated"
+                };
+            })
+            .ToJsonAsync();
     }
 
     [McpServerTool, Description("Find all callers (controllers/endpoints) that eventually reach the method at the given location.")]
     public async Task<string> FindCallersFromLocation(string filePath, int line, int column, int maxDepth = 5, int limit = 100)
     {
-        try
-        {
-            _logger.LogInformation("Finding callers from {FilePath}:{Line}:{Column}", filePath, line, column);
-            
-            var result = await _callGraphService.FindCallersFromLocationAsync(filePath, line, column, maxDepth, limit);
-            
-            return JsonConvert.SerializeObject(result, Formatting.Indented);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error finding callers from location: {FilePath}:{Line}:{Column}", filePath, line, column);
-            return JsonConvert.SerializeObject(new { success = false, error = ex.Message });
-        }
+        return await ResponseBuilder
+            .ForOperation("FindCallersFromLocation", _logger)
+            .WithParameters(filePath, line, column, maxDepth, limit)
+            .ExecuteAsync(() => _callGraphService.FindCallersFromLocationAsync(filePath, line, column, maxDepth, limit))
+            .ToJsonAsync();
     }
 
     [McpServerTool, Description("Find all methods and database operations called from the given location.")]
     public async Task<string> FindCalleesFromLocation(string filePath, int line, int column, int maxDepth = 5, int limit = 200)
     {
-        try
-        {
-            _logger.LogInformation("Finding callees from {FilePath}:{Line}:{Column}", filePath, line, column);
-            
-            var result = await _callGraphService.FindCalleesFromLocationAsync(filePath, line, column, maxDepth, limit);
-            
-            return JsonConvert.SerializeObject(result, Formatting.Indented);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error finding callees from location: {FilePath}:{Line}:{Column}", filePath, line, column);
-            return JsonConvert.SerializeObject(new { success = false, error = ex.Message });
-        }
+        return await ResponseBuilder
+            .ForOperation("FindCalleesFromLocation", _logger)
+            .WithParameters(filePath, line, column, maxDepth, limit)
+            .ExecuteAsync(() => _callGraphService.FindCalleesFromLocationAsync(filePath, line, column, maxDepth, limit))
+            .ToJsonAsync();
     }
 
     [McpServerTool, Description("Gets MediatR handler mappings showing relationships between requests/commands and their handlers.")]
     public async Task<string> GetMediatRMappings()
     {
+        return await ResponseBuilder
+            .ForOperation("GetMediatRMappings", _logger)
+            .ExecuteAsync<object>(async () =>
+            {
+                var mappings = await _mediatRMappingService.GetHandlerMappingsAsync();
+                
+                return new
+                {
+                    totalMappings = mappings.Count(),
+                    mappings = mappings.Select(m => new
+                    {
+                        requestType = m.RequestType,
+                        requestFullName = m.RequestFullName,
+                        handlerType = m.HandlerType,
+                        handlerFullName = m.HandlerFullName,
+                        responseType = m.ResponseType,
+                        handlerLocation = new
+                        {
+                            filePath = m.HandlerFilePath,
+                            line = m.HandlerLine,
+                            column = m.HandlerColumn
+                        },
+                        isCommand = m.IsCommand
+                    }).ToList()
+                };
+            })
+            .ToJsonAsync();
+    }
+
+    [McpServerTool, Description("Echoes the SolutionPath environment variable")]
+    public async Task<string> EchoSolutionPath()
+    {
+        return await ResponseBuilder
+            .ForOperation("EchoSolutionPath", _logger)
+            .ExecuteAsync<object>(async () =>
+            {
+                await Task.CompletedTask; // Make it async for consistency
+                var solutionPath = Environment.GetEnvironmentVariable("SolutionPath");
+                return new { solutionPath = solutionPath ?? "Not set" };
+            })
+            .ToJsonAsync();
+    }
+}
+
+/// <summary>
+/// Builder pattern for creating MCP tool responses with consistent error handling and logging
+/// </summary>
+public class ResponseBuilder
+{
+    private readonly ILogger _logger;
+    private readonly string _operationName;
+    private object?[]? _parameters;
+    private Func<Task<object>>? _operation;
+    private readonly List<Func<Exception, Task<bool>>> _errorHandlers = new();
+    private bool _includeStackTrace = false;
+    private Formatting _jsonFormatting = Formatting.Indented;
+
+    private ResponseBuilder(string operationName, ILogger logger)
+    {
+        _operationName = operationName;
+        _logger = logger;
+    }
+
+    public static ResponseBuilder ForOperation(string operationName, ILogger logger)
+    {
+        return new ResponseBuilder(operationName, logger);
+    }
+
+    public ResponseBuilder WithParameters(params object?[] parameters)
+    {
+        _parameters = parameters;
+        return this;
+    }
+
+    public ResponseBuilder ExecuteAsync<T>(Func<Task<T>> operation)
+    {
+        _operation = async () => (object)(await operation())!;
+        return this;
+    }
+
+    public ResponseBuilder OnError(Func<Exception, Task<bool>> errorHandler)
+    {
+        _errorHandlers.Add(errorHandler);
+        return this;
+    }
+
+    public ResponseBuilder IncludeStackTrace(bool include = true)
+    {
+        _includeStackTrace = include;
+        return this;
+    }
+
+    public ResponseBuilder WithJsonFormatting(Formatting formatting)
+    {
+        _jsonFormatting = formatting;
+        return this;
+    }
+
+    public async Task<string> ToJsonAsync()
+    {
         try
         {
-            _logger.LogInformation("Getting MediatR handler mappings");
-            
-            var mappings = await _mediatRMappingService.GetHandlerMappingsAsync();
-            
-            return JsonConvert.SerializeObject(new
+            _logger.LogInformation("Executing operation: {OperationName} with parameters: {Parameters}", 
+                _operationName, 
+                _parameters != null ? string.Join(", ", _parameters.Select(p => p?.ToString() ?? "null")) : "none");
+
+            if (_operation == null)
             {
-                totalMappings = mappings.Count(),
-                mappings = mappings.Select(m => new
-                {
-                    requestType = m.RequestType,
-                    requestFullName = m.RequestFullName,
-                    handlerType = m.HandlerType,
-                    handlerFullName = m.HandlerFullName,
-                    responseType = m.ResponseType,
-                    handlerLocation = new
-                    {
-                        filePath = m.HandlerFilePath,
-                        line = m.HandlerLine,
-                        column = m.HandlerColumn
-                    },
-                    isCommand = m.IsCommand
-                }).ToList()
-            }, Formatting.Indented);
+                throw new InvalidOperationException("No operation specified. Call ExecuteAsync() first.");
+            }
+
+            var result = await _operation();
+            
+            _logger.LogDebug("Operation {OperationName} completed successfully", _operationName);
+            
+            return JsonConvert.SerializeObject(result, _jsonFormatting);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error getting MediatR mappings");
-            return JsonConvert.SerializeObject(new { success = false, error = ex.Message });
+            _logger.LogError(ex, "Error in operation: {OperationName}", _operationName);
+
+            // Try custom error handlers first
+            foreach (var handler in _errorHandlers)
+            {
+                if (await handler(ex))
+                {
+                    // Handler indicated it processed the error
+                    return JsonConvert.SerializeObject(new { success = false, error = "Handled by custom error handler" }, _jsonFormatting);
+                }
+            }
+
+            // Default error response
+            var errorResponse = new
+            {
+                success = false,
+                error = ex.Message,
+                operationName = _operationName,
+                stackTrace = _includeStackTrace ? ex.StackTrace : null
+            };
+
+            return JsonConvert.SerializeObject(errorResponse, _jsonFormatting);
         }
     }
 }
