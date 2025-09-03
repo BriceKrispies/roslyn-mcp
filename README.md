@@ -1,3 +1,5 @@
+WARNING - EARLY ALPHA/POC implementation. Not intended for production use cases.
+
 # .NET LSP MCP Server
 
 A Model Context Protocol (MCP) server that provides C# code analysis tools using Roslyn. This server enables AI assistants to analyze .NET solutions, projects, and files with comprehensive semantic understanding.
