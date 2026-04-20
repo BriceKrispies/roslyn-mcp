@@ -1,0 +1,111 @@
+@model MyApp.ViewModels.UsersViewModel
+@{
+    ViewData["Title"] = Model.PageTitle;
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="info-section rounded p-4 mb-4">
+            <h1 class="display-4">@Model.PageTitle</h1>
+            <p class="lead">@Model.Message</p>
+            <hr class="my-4" style="border-color: rgba(255,255,255,0.3);">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5><i class="bi bi-people"></i> Total Users: @Model.TotalUsers</h5>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <small>Last Updated: @Model.LastUpdated.ToString("yyyy-MM-dd HH:mm:ss")</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model.Users.Any())
+{
+    <div class="row">
+        @foreach (var user in Model.Users)
+        {
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card user-card h-100">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="card-title mb-0">@user.Name</h5>
+                        <span class="badge @(user.IsActive ? "bg-success" : "bg-secondary") status-badge">
+                            @user.StatusText
+                        </span>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <strong>Email:</strong><br>
+                            <a href="mailto:@user.Email" class="text-decoration-none">@user.Email</a>
+                        </div>
+                        
+                        @if (!string.IsNullOrEmpty(user.Bio))
+                        {
+                            <div class="mb-3">
+                                <strong>Bio:</strong><br>
+                                <p class="text-muted small">@user.Bio</p>
+                            </div>
+                        }
+                        
+                        <div class="text-muted small">
+                            <div><strong>Created:</strong> @user.CreatedAtFormatted</div>
+                            @if (user.UpdatedAt.HasValue)
+                            {
+                                <div><strong>Updated:</strong> @user.UpdatedAt.Value.ToString("yyyy-MM-dd HH:mm")</div>
+                            }
+                        </div>
+                    </div>
+                    <div class="card-footer text-center">
+                        <small class="text-muted">User ID: @user.Id</small>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="row">
+        <div class="col-12">
+            <div class="alert alert-info text-center">
+                <h4>No Users Found</h4>
+                <p>There are currently no users in the database.</p>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>Technology Stack Demo</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span><strong>ASP.NET Core MVC:</strong> Web framework</span>
+                        <span class="badge bg-primary">✓ Active</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span><strong>MediatR:</strong> CQRS pattern implementation</span>
+                        <span class="badge bg-primary">✓ Active</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span><strong>Entity Framework Core:</strong> ORM with SQLite</span>
+                        <span class="badge bg-primary">✓ Active</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span><strong>Autofac:</strong> Dependency injection container</span>
+                        <span class="badge bg-primary">✓ Active</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span><strong>DependencyApp Library:</strong> Custom class library</span>
+                        <span class="badge bg-success">✓ Integrated</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

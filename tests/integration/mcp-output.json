@@ -1,0 +1,3972 @@
+{
+  "_tools_list": [
+    "load_project",
+    "load_solution",
+    "find_callees_from_location",
+    "analyze_solution",
+    "analyze_file",
+    "clear_workspace",
+    "echo_solution_path",
+    "find_references",
+    "get_diagnostics",
+    "get_mediat_r_mappings",
+    "find_callers_from_location",
+    "get_workspace_status",
+    "analyze_project",
+    "get_symbols",
+    "find_implementations"
+  ],
+  "LoadSolution": {
+    "success": true,
+    "solutionPath": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp.sln",
+    "projectCount": 2,
+    "projects": [
+      {
+        "name": "MyApp",
+        "path": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\MyApp.csproj",
+        "language": "C#",
+        "documentCount": 46
+      },
+      {
+        "name": "DependencyApp",
+        "path": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\DependencyApp\\DependencyApp\\DependencyApp.csproj",
+        "language": "C#",
+        "documentCount": 6
+      }
+    ]
+  },
+  "GetMediatRMappings": {
+    "totalMappings": 11,
+    "mappings": [
+      {
+        "requestType": "CreateUserSessionCommand",
+        "requestFullName": "MyApp.Messages.CreateUserSessionCommand",
+        "handlerType": "CreateUserSessionCommandHandler",
+        "handlerFullName": "MyApp.Handlers.CreateUserSessionCommandHandler",
+        "responseType": "String",
+        "handlerLocation": {
+          "filePath": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\CreateUserSessionCommandHandler.cs",
+          "line": 20,
+          "column": 5
+        },
+        "isCommand": false
+      },
+      {
+        "requestType": "GetUserPreferencesQuery",
+        "requestFullName": "MyApp.Messages.GetUserPreferencesQuery",
+        "handlerType": "GetUserPreferencesQueryHandler",
+        "handlerFullName": "MyApp.Handlers.GetUserPreferencesQueryHandler",
+        "responseType": "UserPreferences",
+        "handlerLocation": {
+          "filePath": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\GetUserPreferencesQueryHandler.cs",
+          "line": 16,
+          "column": 5
+        },
+        "isCommand": false
+      },
+      {
+        "requestType": "GetUsersQuery",
+        "requestFullName": "MyApp.Messages.GetUsersQuery",
+        "handlerType": "GetUsersQueryHandler",
+        "handlerFullName": "MyApp.Handlers.GetUsersQueryHandler",
+        "responseType": "UsersViewModel",
+        "handlerLocation": {
+          "filePath": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\GetUsersQueryHandler.cs",
+          "line": 24,
+          "column": 5
+        },
+        "isCommand": false
+      },
+      {
+        "requestType": "HelloMessage",
+        "requestFullName": "MyApp.Messages.HelloMessage",
+        "handlerType": "HelloMessageHandler",
+        "handlerFullName": "MyApp.Handlers.HelloMessageHandler",
+        "responseType": "void",
+        "handlerLocation": {
+          "filePath": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\HelloMessageHandler.cs",
+          "line": 16,
+          "column": 5
+        },
+        "isCommand": true
+      },
+      {
+        "requestType": "IsUserAuthenticatedQuery",
+        "requestFullName": "MyApp.Messages.IsUserAuthenticatedQuery",
+        "handlerType": "IsUserAuthenticatedQueryHandler",
+        "handlerFullName": "MyApp.Handlers.IsUserAuthenticatedQueryHandler",
+        "responseType": "Boolean",
+        "handlerLocation": {
+          "filePath": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\IsUserAuthenticatedQueryHandler.cs",
+          "line": 16,
+          "column": 5
+        },
+        "isCommand": false
+      },
+      {
+        "requestType": "LogUserActivityCommand",
+        "requestFullName": "MyApp.Messages.LogUserActivityCommand",
+        "handlerType": "LogUserActivityCommandHandler",
+        "handlerFullName": "MyApp.Handlers.LogUserActivityCommandHandler",
+        "responseType": "void",
+        "handlerLocation": {
+          "filePath": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\LogUserActivityCommandHandler.cs",
+          "line": 20,
+          "column": 5
+        },
+        "isCommand": true
+      },
+      {
+        "requestType": "PerformMaintenanceCommand",
+        "requestFullName": "MyApp.Messages.PerformMaintenanceCommand",
+        "handlerType": "PerformMaintenanceCommandHandler",
+        "handlerFullName": "MyApp.Handlers.PerformMaintenanceCommandHandler",
+        "responseType": "MaintenanceResult",
+        "handlerLocation": {
+          "filePath": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\PerformMaintenanceCommandHandler.cs",
+          "line": 26,
+          "column": 5
+        },
+        "isCommand": false
+      },
+      {
+        "requestType": "ProcessUserActionCommand",
+        "requestFullName": "MyApp.Messages.ProcessUserActionCommand",
+        "handlerType": "ProcessUserActionCommandHandler",
+        "handlerFullName": "MyApp.Handlers.ProcessUserActionCommandHandler",
+        "responseType": "UserActionResult",
+        "handlerLocation": {
+          "filePath": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\ProcessUserActionCommandHandler.cs",
+          "line": 18,
+          "column": 5
+        },
+        "isCommand": false
+      },
+      {
+        "requestType": "UpdateUserProfileCommand",
+        "requestFullName": "MyApp.Messages.UpdateUserProfileCommand",
+        "handlerType": "UpdateUserProfileCommandHandler",
+        "handlerFullName": "MyApp.Handlers.UpdateUserProfileCommandHandler",
+        "responseType": "Boolean",
+        "handlerLocation": {
+          "filePath": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\UpdateUserProfileCommandHandler.cs",
+          "line": 26,
+          "column": 5
+        },
+        "isCommand": false
+      },
+      {
+        "requestType": "ValidateUserPermissionsQuery",
+        "requestFullName": "MyApp.Messages.ValidateUserPermissionsQuery",
+        "handlerType": "ValidateUserPermissionsQueryHandler",
+        "handlerFullName": "MyApp.Handlers.ValidateUserPermissionsQueryHandler",
+        "responseType": "Boolean",
+        "handlerLocation": {
+          "filePath": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\ValidateUserPermissionsQueryHandler.cs",
+          "line": 16,
+          "column": 5
+        },
+        "isCommand": false
+      },
+      {
+        "requestType": "ValidateUserDataQuery",
+        "requestFullName": "DependencyApp.Messages.ValidateUserDataQuery",
+        "handlerType": "ValidateUserDataQueryHandler",
+        "handlerFullName": "DependencyApp.Handlers.ValidateUserDataQueryHandler",
+        "responseType": "UserDataValidationResult",
+        "handlerLocation": {
+          "filePath": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\DependencyApp\\DependencyApp\\Handlers\\ValidateUserDataQueryHandler.cs",
+          "line": 20,
+          "column": 5
+        },
+        "isCommand": false
+      }
+    ]
+  },
+  "FindImplementations:IUserService": {
+    "interfaceName": "IUserService",
+    "projectName": "all",
+    "implementationCount": 3,
+    "implementations": [
+      {
+        "implementingClass": "CacheUserService",
+        "implementingClassFullName": "MyApp.Services.CacheUserService",
+        "filePath": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\CacheUserService.cs",
+        "location": "11:1",
+        "namespace": "MyApp.Services",
+        "isAbstract": false,
+        "isPublic": true,
+        "allImplementedInterfaces": [
+          "MyApp.Services.IUserService"
+        ]
+      },
+      {
+        "implementingClass": "DatabaseUserService",
+        "implementingClassFullName": "MyApp.Services.DatabaseUserService",
+        "filePath": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\DatabaseUserService.cs",
+        "location": "12:1",
+        "namespace": "MyApp.Services",
+        "isAbstract": false,
+        "isPublic": true,
+        "allImplementedInterfaces": [
+          "MyApp.Services.IUserService"
+        ]
+      },
+      {
+        "implementingClass": "MockUserService",
+        "implementingClassFullName": "MyApp.Services.MockUserService",
+        "filePath": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\MockUserService.cs",
+        "location": "10:1",
+        "namespace": "MyApp.Services",
+        "isAbstract": false,
+        "isPublic": true,
+        "allImplementedInterfaces": [
+          "MyApp.Services.IUserService"
+        ]
+      }
+    ]
+  },
+  "FindImplementations:INotificationService": {
+    "interfaceName": "INotificationService",
+    "projectName": "all",
+    "implementationCount": 3,
+    "implementations": [
+      {
+        "implementingClass": "EmailNotificationService",
+        "implementingClassFullName": "MyApp.Services.EmailNotificationService",
+        "filePath": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\EmailNotificationService.cs",
+        "location": "9:1",
+        "namespace": "MyApp.Services",
+        "isAbstract": false,
+        "isPublic": true,
+        "allImplementedInterfaces": [
+          "MyApp.Services.INotificationService"
+        ]
+      },
+      {
+        "implementingClass": "PushNotificationService",
+        "implementingClassFullName": "MyApp.Services.PushNotificationService",
+        "filePath": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\PushNotificationService.cs",
+        "location": "9:1",
+        "namespace": "MyApp.Services",
+        "isAbstract": false,
+        "isPublic": true,
+        "allImplementedInterfaces": [
+          "MyApp.Services.INotificationService"
+        ]
+      },
+      {
+        "implementingClass": "SmsNotificationService",
+        "implementingClassFullName": "MyApp.Services.SmsNotificationService",
+        "filePath": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\SmsNotificationService.cs",
+        "location": "9:1",
+        "namespace": "MyApp.Services",
+        "isAbstract": false,
+        "isPublic": true,
+        "allImplementedInterfaces": [
+          "MyApp.Services.INotificationService"
+        ]
+      }
+    ]
+  },
+  "FindImplementations:IPaymentProcessor": {
+    "interfaceName": "IPaymentProcessor",
+    "projectName": "all",
+    "implementationCount": 3,
+    "implementations": [
+      {
+        "implementingClass": "MockPaymentProcessor",
+        "implementingClassFullName": "MyApp.Services.MockPaymentProcessor",
+        "filePath": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\MockPaymentProcessor.cs",
+        "location": "9:1",
+        "namespace": "MyApp.Services",
+        "isAbstract": false,
+        "isPublic": true,
+        "allImplementedInterfaces": [
+          "MyApp.Services.IPaymentProcessor"
+        ]
+      },
+      {
+        "implementingClass": "PayPalPaymentProcessor",
+        "implementingClassFullName": "MyApp.Services.PayPalPaymentProcessor",
+        "filePath": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\PayPalPaymentProcessor.cs",
+        "location": "9:1",
+        "namespace": "MyApp.Services",
+        "isAbstract": false,
+        "isPublic": true,
+        "allImplementedInterfaces": [
+          "MyApp.Services.IPaymentProcessor"
+        ]
+      },
+      {
+        "implementingClass": "StripePaymentProcessor",
+        "implementingClassFullName": "MyApp.Services.StripePaymentProcessor",
+        "filePath": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\StripePaymentProcessor.cs",
+        "location": "9:1",
+        "namespace": "MyApp.Services",
+        "isAbstract": false,
+        "isPublic": true,
+        "allImplementedInterfaces": [
+          "MyApp.Services.IPaymentProcessor"
+        ]
+      }
+    ]
+  },
+  "FindCalleesFromLocation:Index": {
+    "SourceMethod": "HomeController.Index",
+    "Callees": [
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Controllers\\HomeController.cs",
+        "Line": 26,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 0
+      },
+      {
+        "Method": "ISender.Send",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Controllers\\HomeController.cs",
+        "Line": 31,
+        "Column": 35,
+        "CallType": "MediatR",
+        "TargetHandler": "GetUsersQueryHandler",
+        "Operation": "Send",
+        "Entity": null,
+        "Depth": 0
+      },
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\GetUsersQueryHandler.cs",
+        "Line": 26,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "ISender.Send",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\GetUsersQueryHandler.cs",
+        "Line": 30,
+        "Column": 37,
+        "CallType": "MediatR",
+        "TargetHandler": "IsUserAuthenticatedQueryHandler",
+        "Operation": "Send",
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\IsUserAuthenticatedQueryHandler.cs",
+        "Line": 18,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 2
+      },
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\IsUserAuthenticatedQueryHandler.cs",
+        "Line": 21,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 2
+      },
+      {
+        "Method": "Task.FromResult",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\IsUserAuthenticatedQueryHandler.cs",
+        "Line": 22,
+        "Column": 16,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 2
+      },
+      {
+        "Method": "LoggerExtensions.LogWarning",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\GetUsersQueryHandler.cs",
+        "Line": 34,
+        "Column": 13,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "ISender.Send",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\GetUsersQueryHandler.cs",
+        "Line": 46,
+        "Column": 39,
+        "CallType": "MediatR",
+        "TargetHandler": "ValidateUserPermissionsQueryHandler",
+        "Operation": "Send",
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\ValidateUserPermissionsQueryHandler.cs",
+        "Line": 18,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 2
+      },
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\ValidateUserPermissionsQueryHandler.cs",
+        "Line": 30,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 2
+      },
+      {
+        "Method": "Task.FromResult",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\ValidateUserPermissionsQueryHandler.cs",
+        "Line": 31,
+        "Column": 16,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 2
+      },
+      {
+        "Method": "LoggerExtensions.LogWarning",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\GetUsersQueryHandler.cs",
+        "Line": 50,
+        "Column": 13,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "ISender.Send",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\GetUsersQueryHandler.cs",
+        "Line": 51,
+        "Column": 19,
+        "CallType": "MediatR",
+        "TargetHandler": "LogUserActivityCommandHandler",
+        "Operation": "Send",
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\LogUserActivityCommandHandler.cs",
+        "Line": 22,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 2
+      },
+      {
+        "Method": "DbSet.Add",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\LogUserActivityCommandHandler.cs",
+        "Line": 37,
+        "Column": 13,
+        "CallType": "Database",
+        "TargetHandler": null,
+        "Operation": "INSERT",
+        "Entity": "UserActivities",
+        "Depth": 2
+      },
+      {
+        "Method": "DbContext.SaveChangesAsync",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\LogUserActivityCommandHandler.cs",
+        "Line": 38,
+        "Column": 19,
+        "CallType": "Database",
+        "TargetHandler": null,
+        "Operation": "SAVE",
+        "Entity": null,
+        "Depth": 2
+      },
+      {
+        "Method": "LoggerExtensions.LogDebug",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\LogUserActivityCommandHandler.cs",
+        "Line": 40,
+        "Column": 13,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 2
+      },
+      {
+        "Method": "LoggerExtensions.LogError",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\LogUserActivityCommandHandler.cs",
+        "Line": 44,
+        "Column": 13,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 2
+      },
+      {
+        "Method": "DbSet.Add",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\LogUserActivityCommandHandler.cs",
+        "Line": 59,
+        "Column": 17,
+        "CallType": "Database",
+        "TargetHandler": null,
+        "Operation": "INSERT",
+        "Entity": "UserActivities",
+        "Depth": 2
+      },
+      {
+        "Method": "DbContext.SaveChangesAsync",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\LogUserActivityCommandHandler.cs",
+        "Line": 60,
+        "Column": 23,
+        "CallType": "Database",
+        "TargetHandler": null,
+        "Operation": "SAVE",
+        "Entity": null,
+        "Depth": 2
+      },
+      {
+        "Method": "LoggerExtensions.LogCritical",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\LogUserActivityCommandHandler.cs",
+        "Line": 64,
+        "Column": 17,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 2
+      },
+      {
+        "Method": "ISender.Send",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\GetUsersQueryHandler.cs",
+        "Line": 64,
+        "Column": 37,
+        "CallType": "MediatR",
+        "TargetHandler": "GetUserPreferencesQueryHandler",
+        "Operation": "Send",
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\GetUserPreferencesQueryHandler.cs",
+        "Line": 18,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 2
+      },
+      {
+        "Method": "String.Contains",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\GetUserPreferencesQueryHandler.cs",
+        "Line": 23,
+        "Column": 21,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 2
+      },
+      {
+        "Method": "String.Contains",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\GetUserPreferencesQueryHandler.cs",
+        "Line": 25,
+        "Column": 24,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 2
+      },
+      {
+        "Method": "String.Contains",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\GetUserPreferencesQueryHandler.cs",
+        "Line": 27,
+        "Column": 24,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 2
+      },
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\GetUserPreferencesQueryHandler.cs",
+        "Line": 30,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 2
+      },
+      {
+        "Method": "Task.FromResult",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\GetUserPreferencesQueryHandler.cs",
+        "Line": 33,
+        "Column": 16,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 2
+      },
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\GetUsersQueryHandler.cs",
+        "Line": 65,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "ISender.Send",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\GetUsersQueryHandler.cs",
+        "Line": 69,
+        "Column": 15,
+        "CallType": "MediatR",
+        "TargetHandler": "LogUserActivityCommandHandler",
+        "Operation": "Send",
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\GetUsersQueryHandler.cs",
+        "Line": 72,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "EntityFrameworkQueryableExtensions.ToListAsync",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\GetUsersQueryHandler.cs",
+        "Line": 78,
+        "Column": 27,
+        "CallType": "Database",
+        "TargetHandler": null,
+        "Operation": "SELECT",
+        "Entity": "User",
+        "Depth": 1
+      },
+      {
+        "Method": "MessageUtilities.FormatGreeting",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\GetUsersQueryHandler.cs",
+        "Line": 83,
+        "Column": 24,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "MessageUtilities.GetTimestamp",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\GetUsersQueryHandler.cs",
+        "Line": 84,
+        "Column": 25,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "Enumerable.ToList",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\GetUsersQueryHandler.cs",
+        "Line": 87,
+        "Column": 33,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "Enumerable.Select",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\GetUsersQueryHandler.cs",
+        "Line": 87,
+        "Column": 33,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\GetUsersQueryHandler.cs",
+        "Line": 98,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "ISender.Send",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\GetUsersQueryHandler.cs",
+        "Line": 101,
+        "Column": 15,
+        "CallType": "MediatR",
+        "TargetHandler": "LogUserActivityCommandHandler",
+        "Operation": "Send",
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Controllers\\HomeController.cs",
+        "Line": 33,
+        "Column": 13,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 0
+      },
+      {
+        "Method": "Controller.View",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Controllers\\HomeController.cs",
+        "Line": 35,
+        "Column": 20,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 0
+      },
+      {
+        "Method": "LoggerExtensions.LogError",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Controllers\\HomeController.cs",
+        "Line": 39,
+        "Column": 13,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 0
+      },
+      {
+        "Method": "Controller.View",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Controllers\\HomeController.cs",
+        "Line": 42,
+        "Column": 20,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 0
+      }
+    ],
+    "DatabaseOperations": [
+      {
+        "Operation": "INSERT",
+        "Table": "UserActivities",
+        "Type": "Write",
+        "Location": "line 37",
+        "Method": "Add",
+        "RawSql": null
+      },
+      {
+        "Operation": "SAVE",
+        "Table": "",
+        "Type": "Write",
+        "Location": "line 38",
+        "Method": "SaveChangesAsync",
+        "RawSql": null
+      },
+      {
+        "Operation": "INSERT",
+        "Table": "UserActivities",
+        "Type": "Write",
+        "Location": "line 59",
+        "Method": "Add",
+        "RawSql": null
+      },
+      {
+        "Operation": "SAVE",
+        "Table": "",
+        "Type": "Write",
+        "Location": "line 60",
+        "Method": "SaveChangesAsync",
+        "RawSql": null
+      },
+      {
+        "Operation": "SELECT",
+        "Table": "User",
+        "Type": "Read",
+        "Location": "line 78",
+        "Method": "ToListAsync",
+        "RawSql": null
+      }
+    ],
+    "ExternalCalls": [
+      {
+        "Service": "MediatR",
+        "Operations": [
+          "GetUsersQueryHandler",
+          "IsUserAuthenticatedQueryHandler",
+          "ValidateUserPermissionsQueryHandler",
+          "LogUserActivityCommandHandler",
+          "GetUserPreferencesQueryHandler"
+        ],
+        "Type": "MediatR",
+        "Locations": [
+          "line 31",
+          "line 30",
+          "line 46",
+          "line 51",
+          "line 64",
+          "line 69",
+          "line 101"
+        ]
+      }
+    ],
+    "TotalCallees": 43,
+    "MaxDepthReached": false,
+    "AnalyzedAt": "2026-04-20T14:05:44.1138027Z"
+  },
+  "FindCalleesFromLocation:ProcessUserAction": {
+    "SourceMethod": "HomeController.ProcessUserAction",
+    "Callees": [
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Controllers\\HomeController.cs",
+        "Line": 63,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 0
+      },
+      {
+        "Method": "ISender.Send",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Controllers\\HomeController.cs",
+        "Line": 69,
+        "Column": 32,
+        "CallType": "MediatR",
+        "TargetHandler": "ProcessUserActionCommandHandler",
+        "Operation": "Send",
+        "Entity": null,
+        "Depth": 0
+      },
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\ProcessUserActionCommandHandler.cs",
+        "Line": 20,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "String.StartsWith",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\ProcessUserActionCommandHandler.cs",
+        "Line": 28,
+        "Column": 17,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "ProcessUserActionCommandHandler.HandleAuthenticationAction",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\ProcessUserActionCommandHandler.cs",
+        "Line": 30,
+        "Column": 32,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "LoggerExtensions.LogDebug",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\ProcessUserActionCommandHandler.cs",
+        "Line": 78,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 2
+      },
+      {
+        "Method": "String.Equals",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\ProcessUserActionCommandHandler.cs",
+        "Line": 82,
+        "Column": 13,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 2
+      },
+      {
+        "Method": "ISender.Send",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\ProcessUserActionCommandHandler.cs",
+        "Line": 85,
+        "Column": 38,
+        "CallType": "MediatR",
+        "TargetHandler": "CreateUserSessionCommandHandler",
+        "Operation": "Send",
+        "Entity": null,
+        "Depth": 2
+      },
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\CreateUserSessionCommandHandler.cs",
+        "Line": 22,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "Guid.NewGuid",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\CreateUserSessionCommandHandler.cs",
+        "Line": 27,
+        "Column": 40,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "DateTime.Add",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\CreateUserSessionCommandHandler.cs",
+        "Line": 31,
+        "Column": 19,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "DateTime.AddHours",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\CreateUserSessionCommandHandler.cs",
+        "Line": 32,
+        "Column": 19,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "DbSet.Add",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\CreateUserSessionCommandHandler.cs",
+        "Line": 49,
+        "Column": 13,
+        "CallType": "Database",
+        "TargetHandler": null,
+        "Operation": "INSERT",
+        "Entity": "UserSessions",
+        "Depth": 3
+      },
+      {
+        "Method": "DbContext.SaveChangesAsync",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\CreateUserSessionCommandHandler.cs",
+        "Line": 50,
+        "Column": 19,
+        "CallType": "Database",
+        "TargetHandler": null,
+        "Operation": "SAVE",
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\CreateUserSessionCommandHandler.cs",
+        "Line": 52,
+        "Column": 13,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "CreateUserSessionCommandHandler.CleanupExpiredSessionsForUser",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\CreateUserSessionCommandHandler.cs",
+        "Line": 56,
+        "Column": 19,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "Enumerable.ToList",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\CreateUserSessionCommandHandler.cs",
+        "Line": 72,
+        "Column": 35,
+        "CallType": "Database",
+        "TargetHandler": null,
+        "Operation": "SELECT",
+        "Entity": "UserSessions",
+        "Depth": 4
+      },
+      {
+        "Method": "Enumerable.Any",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\CreateUserSessionCommandHandler.cs",
+        "Line": 77,
+        "Column": 17,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 4
+      },
+      {
+        "Method": "DbSet.RemoveRange",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\CreateUserSessionCommandHandler.cs",
+        "Line": 79,
+        "Column": 17,
+        "CallType": "Database",
+        "TargetHandler": null,
+        "Operation": "DELETE",
+        "Entity": "UserSessions",
+        "Depth": 4
+      },
+      {
+        "Method": "DbContext.SaveChangesAsync",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\CreateUserSessionCommandHandler.cs",
+        "Line": 80,
+        "Column": 23,
+        "CallType": "Database",
+        "TargetHandler": null,
+        "Operation": "SAVE",
+        "Entity": null,
+        "Depth": 4
+      },
+      {
+        "Method": "LoggerExtensions.LogDebug",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\CreateUserSessionCommandHandler.cs",
+        "Line": 82,
+        "Column": 17,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 4
+      },
+      {
+        "Method": "LoggerExtensions.LogWarning",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\CreateUserSessionCommandHandler.cs",
+        "Line": 88,
+        "Column": 13,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 4
+      },
+      {
+        "Method": "LoggerExtensions.LogError",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\CreateUserSessionCommandHandler.cs",
+        "Line": 62,
+        "Column": 13,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "String.Equals",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\ProcessUserActionCommandHandler.cs",
+        "Line": 101,
+        "Column": 18,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 2
+      },
+      {
+        "Method": "String.StartsWith",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\ProcessUserActionCommandHandler.cs",
+        "Line": 33,
+        "Column": 22,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "ProcessUserActionCommandHandler.HandleProfileAction",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\ProcessUserActionCommandHandler.cs",
+        "Line": 35,
+        "Column": 32,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "LoggerExtensions.LogDebug",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\ProcessUserActionCommandHandler.cs",
+        "Line": 112,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 2
+      },
+      {
+        "Method": "String.Equals",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\ProcessUserActionCommandHandler.cs",
+        "Line": 116,
+        "Column": 13,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 2
+      },
+      {
+        "Method": "ISender.Send",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\ProcessUserActionCommandHandler.cs",
+        "Line": 119,
+        "Column": 39,
+        "CallType": "MediatR",
+        "TargetHandler": "UpdateUserProfileCommandHandler",
+        "Operation": "Send",
+        "Entity": null,
+        "Depth": 2
+      },
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\UpdateUserProfileCommandHandler.cs",
+        "Line": 28,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "Int32.TryParse",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\UpdateUserProfileCommandHandler.cs",
+        "Line": 34,
+        "Column": 18,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "LoggerExtensions.LogWarning",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\UpdateUserProfileCommandHandler.cs",
+        "Line": 36,
+        "Column": 17,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "EntityFrameworkQueryableExtensions.FirstOrDefaultAsync",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\UpdateUserProfileCommandHandler.cs",
+        "Line": 41,
+        "Column": 30,
+        "CallType": "Database",
+        "TargetHandler": null,
+        "Operation": "SELECT",
+        "Entity": "Users",
+        "Depth": 3
+      },
+      {
+        "Method": "LoggerExtensions.LogWarning",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\UpdateUserProfileCommandHandler.cs",
+        "Line": 46,
+        "Column": 17,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\UpdateUserProfileCommandHandler.cs",
+        "Line": 51,
+        "Column": 13,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "ISender.Send",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\UpdateUserProfileCommandHandler.cs",
+        "Line": 60,
+        "Column": 42,
+        "CallType": "MediatR",
+        "TargetHandler": "ValidateUserDataQueryHandler",
+        "Operation": "Send",
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\DependencyApp\\DependencyApp\\Handlers\\ValidateUserDataQueryHandler.cs",
+        "Line": 22,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 4
+      },
+      {
+        "Method": "ValidateUserDataQueryHandler.GetValidationRulesForLevel",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\DependencyApp\\DependencyApp\\Handlers\\ValidateUserDataQueryHandler.cs",
+        "Line": 31,
+        "Column": 39,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 4
+      },
+      {
+        "Method": "Task.Delay",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\DependencyApp\\DependencyApp\\Handlers\\ValidateUserDataQueryHandler.cs",
+        "Line": 35,
+        "Column": 15,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 4
+      },
+      {
+        "Method": "String.IsNullOrWhiteSpace",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\DependencyApp\\DependencyApp\\Handlers\\ValidateUserDataQueryHandler.cs",
+        "Line": 38,
+        "Column": 13,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 4
+      },
+      {
+        "Method": "List.Add",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\DependencyApp\\DependencyApp\\Handlers\\ValidateUserDataQueryHandler.cs",
+        "Line": 40,
+        "Column": 13,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 4
+      },
+      {
+        "Method": "List.Add",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\DependencyApp\\DependencyApp\\Handlers\\ValidateUserDataQueryHandler.cs",
+        "Line": 44,
+        "Column": 13,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 4
+      },
+      {
+        "Method": "ValidateUserDataQueryHandler.ValidateName",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\DependencyApp\\DependencyApp\\Handlers\\ValidateUserDataQueryHandler.cs",
+        "Line": 48,
+        "Column": 15,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 4
+      },
+      {
+        "Method": "String.IsNullOrWhiteSpace",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\DependencyApp\\DependencyApp\\Handlers\\ValidateUserDataQueryHandler.cs",
+        "Line": 71,
+        "Column": 13,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 5
+      },
+      {
+        "Method": "List.Add",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\DependencyApp\\DependencyApp\\Handlers\\ValidateUserDataQueryHandler.cs",
+        "Line": 75,
+        "Column": 17,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 5
+      },
+      {
+        "Method": "List.Add",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\DependencyApp\\DependencyApp\\Handlers\\ValidateUserDataQueryHandler.cs",
+        "Line": 79,
+        "Column": 17,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 5
+      },
+      {
+        "Method": "List.Add",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\DependencyApp\\DependencyApp\\Handlers\\ValidateUserDataQueryHandler.cs",
+        "Line": 86,
+        "Column": 13,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 5
+      },
+      {
+        "Method": "List.Add",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\DependencyApp\\DependencyApp\\Handlers\\ValidateUserDataQueryHandler.cs",
+        "Line": 90,
+        "Column": 13,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 5
+      },
+      {
+        "Method": "Enumerable.Any",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\DependencyApp\\DependencyApp\\Handlers\\ValidateUserDataQueryHandler.cs",
+        "Line": 96,
+        "Column": 17,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 5
+      },
+      {
+        "Method": "Char.IsDigit",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\DependencyApp\\DependencyApp\\Handlers\\ValidateUserDataQueryHandler.cs",
+        "Line": 96,
+        "Column": 39,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 5
+      },
+      {
+        "Method": "List.Add",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\DependencyApp\\DependencyApp\\Handlers\\ValidateUserDataQueryHandler.cs",
+        "Line": 98,
+        "Column": 17,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 5
+      },
+      {
+        "Method": "Enumerable.Any",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\DependencyApp\\DependencyApp\\Handlers\\ValidateUserDataQueryHandler.cs",
+        "Line": 101,
+        "Column": 17,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 5
+      },
+      {
+        "Method": "String.Contains",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\DependencyApp\\DependencyApp\\Handlers\\ValidateUserDataQueryHandler.cs",
+        "Line": 101,
+        "Column": 39,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 5
+      },
+      {
+        "Method": "List.Add",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\DependencyApp\\DependencyApp\\Handlers\\ValidateUserDataQueryHandler.cs",
+        "Line": 103,
+        "Column": 17,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 5
+      },
+      {
+        "Method": "ValidateUserDataQueryHandler.ValidateEmail",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\DependencyApp\\DependencyApp\\Handlers\\ValidateUserDataQueryHandler.cs",
+        "Line": 51,
+        "Column": 15,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 4
+      },
+      {
+        "Method": "String.IsNullOrWhiteSpace",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\DependencyApp\\DependencyApp\\Handlers\\ValidateUserDataQueryHandler.cs",
+        "Line": 112,
+        "Column": 13,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 5
+      },
+      {
+        "Method": "List.Add",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\DependencyApp\\DependencyApp\\Handlers\\ValidateUserDataQueryHandler.cs",
+        "Line": 116,
+        "Column": 17,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 5
+      },
+      {
+        "Method": "String.Contains",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\DependencyApp\\DependencyApp\\Handlers\\ValidateUserDataQueryHandler.cs",
+        "Line": 122,
+        "Column": 14,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 5
+      },
+      {
+        "Method": "List.Add",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\DependencyApp\\DependencyApp\\Handlers\\ValidateUserDataQueryHandler.cs",
+        "Line": 124,
+        "Column": 13,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 5
+      },
+      {
+        "Method": "String.Split",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\DependencyApp\\DependencyApp\\Handlers\\ValidateUserDataQueryHandler.cs",
+        "Line": 128,
+        "Column": 21,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 5
+      },
+      {
+        "Method": "String.IsNullOrWhiteSpace",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\DependencyApp\\DependencyApp\\Handlers\\ValidateUserDataQueryHandler.cs",
+        "Line": 129,
+        "Column": 34,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 5
+      },
+      {
+        "Method": "String.IsNullOrWhiteSpace",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\DependencyApp\\DependencyApp\\Handlers\\ValidateUserDataQueryHandler.cs",
+        "Line": 129,
+        "Column": 73,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 5
+      },
+      {
+        "Method": "List.Add",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\DependencyApp\\DependencyApp\\Handlers\\ValidateUserDataQueryHandler.cs",
+        "Line": 131,
+        "Column": 13,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 5
+      },
+      {
+        "Method": "String.Contains",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\DependencyApp\\DependencyApp\\Handlers\\ValidateUserDataQueryHandler.cs",
+        "Line": 138,
+        "Column": 18,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 5
+      },
+      {
+        "Method": "List.Add",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\DependencyApp\\DependencyApp\\Handlers\\ValidateUserDataQueryHandler.cs",
+        "Line": 140,
+        "Column": 17,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 5
+      },
+      {
+        "Method": "List.Add",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\DependencyApp\\DependencyApp\\Handlers\\ValidateUserDataQueryHandler.cs",
+        "Line": 145,
+        "Column": 17,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 5
+      },
+      {
+        "Method": "Enumerable.Any",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\DependencyApp\\DependencyApp\\Handlers\\ValidateUserDataQueryHandler.cs",
+        "Line": 153,
+        "Column": 17,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 5
+      },
+      {
+        "Method": "String.EndsWith",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\DependencyApp\\DependencyApp\\Handlers\\ValidateUserDataQueryHandler.cs",
+        "Line": 153,
+        "Column": 46,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 5
+      },
+      {
+        "Method": "List.Add",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\DependencyApp\\DependencyApp\\Handlers\\ValidateUserDataQueryHandler.cs",
+        "Line": 155,
+        "Column": 17,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 5
+      },
+      {
+        "Method": "ValidateUserDataQueryHandler.ValidateBio",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\DependencyApp\\DependencyApp\\Handlers\\ValidateUserDataQueryHandler.cs",
+        "Line": 54,
+        "Column": 15,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 4
+      },
+      {
+        "Method": "String.IsNullOrWhiteSpace",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\DependencyApp\\DependencyApp\\Handlers\\ValidateUserDataQueryHandler.cs",
+        "Line": 164,
+        "Column": 13,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 5
+      },
+      {
+        "Method": "List.Add",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\DependencyApp\\DependencyApp\\Handlers\\ValidateUserDataQueryHandler.cs",
+        "Line": 171,
+        "Column": 13,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 5
+      },
+      {
+        "Method": "Enumerable.Any",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\DependencyApp\\DependencyApp\\Handlers\\ValidateUserDataQueryHandler.cs",
+        "Line": 178,
+        "Column": 17,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 5
+      },
+      {
+        "Method": "String.Contains",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\DependencyApp\\DependencyApp\\Handlers\\ValidateUserDataQueryHandler.cs",
+        "Line": 178,
+        "Column": 48,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 5
+      },
+      {
+        "Method": "List.Add",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\DependencyApp\\DependencyApp\\Handlers\\ValidateUserDataQueryHandler.cs",
+        "Line": 180,
+        "Column": 17,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 5
+      },
+      {
+        "Method": "ValidateUserDataQueryHandler.ApplyLevelSpecificValidations",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\DependencyApp\\DependencyApp\\Handlers\\ValidateUserDataQueryHandler.cs",
+        "Line": 57,
+        "Column": 15,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 4
+      },
+      {
+        "Method": "String.IsNullOrEmpty",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\DependencyApp\\DependencyApp\\Handlers\\ValidateUserDataQueryHandler.cs",
+        "Line": 193,
+        "Column": 22,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 5
+      },
+      {
+        "Method": "String.EndsWith",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\DependencyApp\\DependencyApp\\Handlers\\ValidateUserDataQueryHandler.cs",
+        "Line": 193,
+        "Column": 62,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 5
+      },
+      {
+        "Method": "String.EndsWith",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\DependencyApp\\DependencyApp\\Handlers\\ValidateUserDataQueryHandler.cs",
+        "Line": 193,
+        "Column": 97,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 5
+      },
+      {
+        "Method": "List.Add",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\DependencyApp\\DependencyApp\\Handlers\\ValidateUserDataQueryHandler.cs",
+        "Line": 195,
+        "Column": 21,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 5
+      },
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\DependencyApp\\DependencyApp\\Handlers\\ValidateUserDataQueryHandler.cs",
+        "Line": 61,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 4
+      },
+      {
+        "Method": "LoggerExtensions.LogWarning",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\UpdateUserProfileCommandHandler.cs",
+        "Line": 64,
+        "Column": 17,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "String.Join",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\UpdateUserProfileCommandHandler.cs",
+        "Line": 65,
+        "Column": 37,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "ISender.Send",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\UpdateUserProfileCommandHandler.cs",
+        "Line": 67,
+        "Column": 23,
+        "CallType": "MediatR",
+        "TargetHandler": "LogUserActivityCommandHandler",
+        "Operation": "Send",
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\LogUserActivityCommandHandler.cs",
+        "Line": 22,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 4
+      },
+      {
+        "Method": "DbSet.Add",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\LogUserActivityCommandHandler.cs",
+        "Line": 37,
+        "Column": 13,
+        "CallType": "Database",
+        "TargetHandler": null,
+        "Operation": "INSERT",
+        "Entity": "UserActivities",
+        "Depth": 4
+      },
+      {
+        "Method": "DbContext.SaveChangesAsync",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\LogUserActivityCommandHandler.cs",
+        "Line": 38,
+        "Column": 19,
+        "CallType": "Database",
+        "TargetHandler": null,
+        "Operation": "SAVE",
+        "Entity": null,
+        "Depth": 4
+      },
+      {
+        "Method": "LoggerExtensions.LogDebug",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\LogUserActivityCommandHandler.cs",
+        "Line": 40,
+        "Column": 13,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 4
+      },
+      {
+        "Method": "LoggerExtensions.LogError",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\LogUserActivityCommandHandler.cs",
+        "Line": 44,
+        "Column": 13,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 4
+      },
+      {
+        "Method": "DbSet.Add",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\LogUserActivityCommandHandler.cs",
+        "Line": 59,
+        "Column": 17,
+        "CallType": "Database",
+        "TargetHandler": null,
+        "Operation": "INSERT",
+        "Entity": "UserActivities",
+        "Depth": 4
+      },
+      {
+        "Method": "DbContext.SaveChangesAsync",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\LogUserActivityCommandHandler.cs",
+        "Line": 60,
+        "Column": 23,
+        "CallType": "Database",
+        "TargetHandler": null,
+        "Operation": "SAVE",
+        "Entity": null,
+        "Depth": 4
+      },
+      {
+        "Method": "LoggerExtensions.LogCritical",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\LogUserActivityCommandHandler.cs",
+        "Line": 64,
+        "Column": 17,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 4
+      },
+      {
+        "Method": "String.Join",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\UpdateUserProfileCommandHandler.cs",
+        "Line": 70,
+        "Column": 43,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "Enumerable.Any",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\UpdateUserProfileCommandHandler.cs",
+        "Line": 76,
+        "Column": 17,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\UpdateUserProfileCommandHandler.cs",
+        "Line": 78,
+        "Column": 17,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "String.Join",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\UpdateUserProfileCommandHandler.cs",
+        "Line": 79,
+        "Column": 37,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\UpdateUserProfileCommandHandler.cs",
+        "Line": 82,
+        "Column": 13,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "String.IsNullOrEmpty",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\UpdateUserProfileCommandHandler.cs",
+        "Line": 89,
+        "Column": 18,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "List.Add",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\UpdateUserProfileCommandHandler.cs",
+        "Line": 93,
+        "Column": 17,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "String.IsNullOrEmpty",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\UpdateUserProfileCommandHandler.cs",
+        "Line": 96,
+        "Column": 18,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "List.Add",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\UpdateUserProfileCommandHandler.cs",
+        "Line": 100,
+        "Column": 17,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "Enumerable.Any",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\UpdateUserProfileCommandHandler.cs",
+        "Line": 103,
+        "Column": 17,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "DbContext.SaveChangesAsync",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\UpdateUserProfileCommandHandler.cs",
+        "Line": 108,
+        "Column": 23,
+        "CallType": "Database",
+        "TargetHandler": null,
+        "Operation": "SAVE",
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\UpdateUserProfileCommandHandler.cs",
+        "Line": 110,
+        "Column": 17,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "String.Join",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\UpdateUserProfileCommandHandler.cs",
+        "Line": 111,
+        "Column": 37,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "ISender.Send",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\UpdateUserProfileCommandHandler.cs",
+        "Line": 114,
+        "Column": 23,
+        "CallType": "MediatR",
+        "TargetHandler": "LogUserActivityCommandHandler",
+        "Operation": "Send",
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "String.Join",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\UpdateUserProfileCommandHandler.cs",
+        "Line": 117,
+        "Column": 40,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "ISender.Send",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\UpdateUserProfileCommandHandler.cs",
+        "Line": 123,
+        "Column": 27,
+        "CallType": "MediatR",
+        "TargetHandler": "LogUserActivityCommandHandler",
+        "Operation": "Send",
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "LoggerExtensions.LogDebug",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\UpdateUserProfileCommandHandler.cs",
+        "Line": 134,
+        "Column": 17,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "LoggerExtensions.LogError",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\UpdateUserProfileCommandHandler.cs",
+        "Line": 140,
+        "Column": 13,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "ISender.Send",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\UpdateUserProfileCommandHandler.cs",
+        "Line": 143,
+        "Column": 19,
+        "CallType": "MediatR",
+        "TargetHandler": "LogUserActivityCommandHandler",
+        "Operation": "Send",
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "String.StartsWith",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\ProcessUserActionCommandHandler.cs",
+        "Line": 38,
+        "Column": 22,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "ProcessUserActionCommandHandler.HandleMaintenanceAction",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\ProcessUserActionCommandHandler.cs",
+        "Line": 40,
+        "Column": 32,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "LoggerExtensions.LogDebug",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\ProcessUserActionCommandHandler.cs",
+        "Line": 134,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 2
+      },
+      {
+        "Method": "ISender.Send",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\ProcessUserActionCommandHandler.cs",
+        "Line": 146,
+        "Column": 39,
+        "CallType": "MediatR",
+        "TargetHandler": "PerformMaintenanceCommandHandler",
+        "Operation": "Send",
+        "Entity": null,
+        "Depth": 2
+      },
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\PerformMaintenanceCommandHandler.cs",
+        "Line": 28,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "Stopwatch.StartNew",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\PerformMaintenanceCommandHandler.cs",
+        "Line": 31,
+        "Column": 25,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "ISender.Send",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\PerformMaintenanceCommandHandler.cs",
+        "Line": 37,
+        "Column": 19,
+        "CallType": "MediatR",
+        "TargetHandler": "LogUserActivityCommandHandler",
+        "Operation": "Send",
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "String.ToUpperInvariant",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\PerformMaintenanceCommandHandler.cs",
+        "Line": 43,
+        "Column": 21,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "PerformMaintenanceCommandHandler.CleanupOldActivities",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\PerformMaintenanceCommandHandler.cs",
+        "Line": 46,
+        "Column": 36,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "LoggerExtensions.LogDebug",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\PerformMaintenanceCommandHandler.cs",
+        "Line": 103,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 4
+      },
+      {
+        "Method": "DateTime.AddDays",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\PerformMaintenanceCommandHandler.cs",
+        "Line": 106,
+        "Column": 26,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 4
+      },
+      {
+        "Method": "EntityFrameworkQueryableExtensions.ToListAsync",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\PerformMaintenanceCommandHandler.cs",
+        "Line": 107,
+        "Column": 35,
+        "CallType": "Database",
+        "TargetHandler": null,
+        "Operation": "SELECT",
+        "Entity": "UserActivities",
+        "Depth": 4
+      },
+      {
+        "Method": "Enumerable.Any",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\PerformMaintenanceCommandHandler.cs",
+        "Line": 111,
+        "Column": 13,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 4
+      },
+      {
+        "Method": "DbSet.RemoveRange",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\PerformMaintenanceCommandHandler.cs",
+        "Line": 113,
+        "Column": 13,
+        "CallType": "Database",
+        "TargetHandler": null,
+        "Operation": "DELETE",
+        "Entity": "UserActivities",
+        "Depth": 4
+      },
+      {
+        "Method": "DbContext.SaveChangesAsync",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\PerformMaintenanceCommandHandler.cs",
+        "Line": 114,
+        "Column": 19,
+        "CallType": "Database",
+        "TargetHandler": null,
+        "Operation": "SAVE",
+        "Entity": null,
+        "Depth": 4
+      },
+      {
+        "Method": "PerformMaintenanceCommandHandler.CleanupExpiredSessions",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\PerformMaintenanceCommandHandler.cs",
+        "Line": 50,
+        "Column": 36,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "LoggerExtensions.LogDebug",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\PerformMaintenanceCommandHandler.cs",
+        "Line": 126,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 4
+      },
+      {
+        "Method": "EntityFrameworkQueryableExtensions.ToListAsync",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\PerformMaintenanceCommandHandler.cs",
+        "Line": 129,
+        "Column": 37,
+        "CallType": "Database",
+        "TargetHandler": null,
+        "Operation": "SELECT",
+        "Entity": "UserSessions",
+        "Depth": 4
+      },
+      {
+        "Method": "Enumerable.Any",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\PerformMaintenanceCommandHandler.cs",
+        "Line": 134,
+        "Column": 13,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 4
+      },
+      {
+        "Method": "DbSet.RemoveRange",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\PerformMaintenanceCommandHandler.cs",
+        "Line": 136,
+        "Column": 13,
+        "CallType": "Database",
+        "TargetHandler": null,
+        "Operation": "DELETE",
+        "Entity": "UserSessions",
+        "Depth": 4
+      },
+      {
+        "Method": "DbContext.SaveChangesAsync",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\PerformMaintenanceCommandHandler.cs",
+        "Line": 137,
+        "Column": 19,
+        "CallType": "Database",
+        "TargetHandler": null,
+        "Operation": "SAVE",
+        "Entity": null,
+        "Depth": 4
+      },
+      {
+        "Method": "PerformMaintenanceCommandHandler.UpdateUserStatistics",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\PerformMaintenanceCommandHandler.cs",
+        "Line": 54,
+        "Column": 36,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "LoggerExtensions.LogDebug",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\PerformMaintenanceCommandHandler.cs",
+        "Line": 149,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 4
+      },
+      {
+        "Method": "Int32.TryParse",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\PerformMaintenanceCommandHandler.cs",
+        "Line": 154,
+        "Column": 13,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 4
+      },
+      {
+        "Method": "EntityFrameworkQueryableExtensions.FirstOrDefaultAsync",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\PerformMaintenanceCommandHandler.cs",
+        "Line": 156,
+        "Column": 30,
+        "CallType": "Database",
+        "TargetHandler": null,
+        "Operation": "SELECT",
+        "Entity": "Users",
+        "Depth": 4
+      },
+      {
+        "Method": "EntityFrameworkQueryableExtensions.FirstOrDefaultAsync",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\PerformMaintenanceCommandHandler.cs",
+        "Line": 161,
+        "Column": 42,
+        "CallType": "Database",
+        "TargetHandler": null,
+        "Operation": "SELECT",
+        "Entity": "UserActivities",
+        "Depth": 4
+      },
+      {
+        "Method": "DbContext.SaveChangesAsync",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\PerformMaintenanceCommandHandler.cs",
+        "Line": 169,
+        "Column": 27,
+        "CallType": "Database",
+        "TargetHandler": null,
+        "Operation": "SAVE",
+        "Entity": null,
+        "Depth": 4
+      },
+      {
+        "Method": "EntityFrameworkQueryableExtensions.ToListAsync",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\PerformMaintenanceCommandHandler.cs",
+        "Line": 176,
+        "Column": 36,
+        "CallType": "Database",
+        "TargetHandler": null,
+        "Operation": "SELECT",
+        "Entity": "UserSessions",
+        "Depth": 4
+      },
+      {
+        "Method": "Enumerable.Any",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\PerformMaintenanceCommandHandler.cs",
+        "Line": 186,
+        "Column": 13,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 4
+      },
+      {
+        "Method": "DbContext.SaveChangesAsync",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\PerformMaintenanceCommandHandler.cs",
+        "Line": 188,
+        "Column": 19,
+        "CallType": "Database",
+        "TargetHandler": null,
+        "Operation": "SAVE",
+        "Entity": null,
+        "Depth": 4
+      },
+      {
+        "Method": "PerformMaintenanceCommandHandler.PerformFullCleanup",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\PerformMaintenanceCommandHandler.cs",
+        "Line": 58,
+        "Column": 36,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "LoggerExtensions.LogDebug",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\PerformMaintenanceCommandHandler.cs",
+        "Line": 200,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 4
+      },
+      {
+        "Method": "PerformMaintenanceCommandHandler.CleanupOldActivities",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\PerformMaintenanceCommandHandler.cs",
+        "Line": 205,
+        "Column": 38,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 4
+      },
+      {
+        "Method": "PerformMaintenanceCommandHandler.CleanupExpiredSessions",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\PerformMaintenanceCommandHandler.cs",
+        "Line": 208,
+        "Column": 36,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 4
+      },
+      {
+        "Method": "PerformMaintenanceCommandHandler.UpdateUserStatistics",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\PerformMaintenanceCommandHandler.cs",
+        "Line": 211,
+        "Column": 38,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 4
+      },
+      {
+        "Method": "Stopwatch.Stop",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\PerformMaintenanceCommandHandler.cs",
+        "Line": 67,
+        "Column": 13,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "ISender.Send",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\PerformMaintenanceCommandHandler.cs",
+        "Line": 71,
+        "Column": 19,
+        "CallType": "MediatR",
+        "TargetHandler": "LogUserActivityCommandHandler",
+        "Operation": "Send",
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\PerformMaintenanceCommandHandler.cs",
+        "Line": 77,
+        "Column": 13,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "Stopwatch.Stop",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\PerformMaintenanceCommandHandler.cs",
+        "Line": 82,
+        "Column": 13,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "LoggerExtensions.LogError",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\PerformMaintenanceCommandHandler.cs",
+        "Line": 87,
+        "Column": 13,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "ISender.Send",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\PerformMaintenanceCommandHandler.cs",
+        "Line": 91,
+        "Column": 19,
+        "CallType": "MediatR",
+        "TargetHandler": "LogUserActivityCommandHandler",
+        "Operation": "Send",
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "ProcessUserActionCommandHandler.HandleGenericAction",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\ProcessUserActionCommandHandler.cs",
+        "Line": 45,
+        "Column": 32,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "LoggerExtensions.LogDebug",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\ProcessUserActionCommandHandler.cs",
+        "Line": 163,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 2
+      },
+      {
+        "Method": "ISender.Send",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\ProcessUserActionCommandHandler.cs",
+        "Line": 49,
+        "Column": 19,
+        "CallType": "MediatR",
+        "TargetHandler": "LogUserActivityCommandHandler",
+        "Operation": "Send",
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\ProcessUserActionCommandHandler.cs",
+        "Line": 56,
+        "Column": 13,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "LoggerExtensions.LogError",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\ProcessUserActionCommandHandler.cs",
+        "Line": 60,
+        "Column": 13,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "ISender.Send",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Handlers\\ProcessUserActionCommandHandler.cs",
+        "Line": 63,
+        "Column": 19,
+        "CallType": "MediatR",
+        "TargetHandler": "LogUserActivityCommandHandler",
+        "Operation": "Send",
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "ISender.Send",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Controllers\\HomeController.cs",
+        "Line": 78,
+        "Column": 23,
+        "CallType": "MediatR",
+        "TargetHandler": "LogUserActivityCommandHandler",
+        "Operation": "Send",
+        "Entity": null,
+        "Depth": 0
+      },
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Controllers\\HomeController.cs",
+        "Line": 83,
+        "Column": 17,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 0
+      },
+      {
+        "Method": "ControllerBase.Ok",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Controllers\\HomeController.cs",
+        "Line": 85,
+        "Column": 24,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 0
+      },
+      {
+        "Method": "ISender.Send",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Controllers\\HomeController.cs",
+        "Line": 98,
+        "Column": 23,
+        "CallType": "MediatR",
+        "TargetHandler": "LogUserActivityCommandHandler",
+        "Operation": "Send",
+        "Entity": null,
+        "Depth": 0
+      },
+      {
+        "Method": "LoggerExtensions.LogWarning",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Controllers\\HomeController.cs",
+        "Line": 103,
+        "Column": 17,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 0
+      },
+      {
+        "Method": "ControllerBase.BadRequest",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Controllers\\HomeController.cs",
+        "Line": 105,
+        "Column": 24,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 0
+      },
+      {
+        "Method": "LoggerExtensions.LogError",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Controllers\\HomeController.cs",
+        "Line": 116,
+        "Column": 13,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 0
+      },
+      {
+        "Method": "ISender.Send",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Controllers\\HomeController.cs",
+        "Line": 120,
+        "Column": 23,
+        "CallType": "MediatR",
+        "TargetHandler": "LogUserActivityCommandHandler",
+        "Operation": "Send",
+        "Entity": null,
+        "Depth": 0
+      },
+      {
+        "Method": "LoggerExtensions.LogCritical",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Controllers\\HomeController.cs",
+        "Line": 127,
+        "Column": 17,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 0
+      },
+      {
+        "Method": "ControllerBase.StatusCode",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Controllers\\HomeController.cs",
+        "Line": 130,
+        "Column": 20,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 0
+      }
+    ],
+    "DatabaseOperations": [
+      {
+        "Operation": "INSERT",
+        "Table": "UserSessions",
+        "Type": "Write",
+        "Location": "line 49",
+        "Method": "Add",
+        "RawSql": null
+      },
+      {
+        "Operation": "SAVE",
+        "Table": "",
+        "Type": "Write",
+        "Location": "line 50",
+        "Method": "SaveChangesAsync",
+        "RawSql": null
+      },
+      {
+        "Operation": "SELECT",
+        "Table": "UserSessions",
+        "Type": "Read",
+        "Location": "line 72",
+        "Method": "ToList",
+        "RawSql": null
+      },
+      {
+        "Operation": "DELETE",
+        "Table": "UserSessions",
+        "Type": "Write",
+        "Location": "line 79",
+        "Method": "RemoveRange",
+        "RawSql": null
+      },
+      {
+        "Operation": "SAVE",
+        "Table": "",
+        "Type": "Write",
+        "Location": "line 80",
+        "Method": "SaveChangesAsync",
+        "RawSql": null
+      },
+      {
+        "Operation": "SELECT",
+        "Table": "Users",
+        "Type": "Read",
+        "Location": "line 41",
+        "Method": "FirstOrDefaultAsync",
+        "RawSql": null
+      },
+      {
+        "Operation": "INSERT",
+        "Table": "UserActivities",
+        "Type": "Write",
+        "Location": "line 37",
+        "Method": "Add",
+        "RawSql": null
+      },
+      {
+        "Operation": "SAVE",
+        "Table": "",
+        "Type": "Write",
+        "Location": "line 38",
+        "Method": "SaveChangesAsync",
+        "RawSql": null
+      },
+      {
+        "Operation": "INSERT",
+        "Table": "UserActivities",
+        "Type": "Write",
+        "Location": "line 59",
+        "Method": "Add",
+        "RawSql": null
+      },
+      {
+        "Operation": "SAVE",
+        "Table": "",
+        "Type": "Write",
+        "Location": "line 60",
+        "Method": "SaveChangesAsync",
+        "RawSql": null
+      },
+      {
+        "Operation": "SAVE",
+        "Table": "",
+        "Type": "Write",
+        "Location": "line 108",
+        "Method": "SaveChangesAsync",
+        "RawSql": null
+      },
+      {
+        "Operation": "SELECT",
+        "Table": "UserActivities",
+        "Type": "Read",
+        "Location": "line 107",
+        "Method": "ToListAsync",
+        "RawSql": null
+      },
+      {
+        "Operation": "DELETE",
+        "Table": "UserActivities",
+        "Type": "Write",
+        "Location": "line 113",
+        "Method": "RemoveRange",
+        "RawSql": null
+      },
+      {
+        "Operation": "SAVE",
+        "Table": "",
+        "Type": "Write",
+        "Location": "line 114",
+        "Method": "SaveChangesAsync",
+        "RawSql": null
+      },
+      {
+        "Operation": "SELECT",
+        "Table": "UserSessions",
+        "Type": "Read",
+        "Location": "line 129",
+        "Method": "ToListAsync",
+        "RawSql": null
+      },
+      {
+        "Operation": "DELETE",
+        "Table": "UserSessions",
+        "Type": "Write",
+        "Location": "line 136",
+        "Method": "RemoveRange",
+        "RawSql": null
+      },
+      {
+        "Operation": "SAVE",
+        "Table": "",
+        "Type": "Write",
+        "Location": "line 137",
+        "Method": "SaveChangesAsync",
+        "RawSql": null
+      },
+      {
+        "Operation": "SELECT",
+        "Table": "Users",
+        "Type": "Read",
+        "Location": "line 156",
+        "Method": "FirstOrDefaultAsync",
+        "RawSql": null
+      },
+      {
+        "Operation": "SELECT",
+        "Table": "UserActivities",
+        "Type": "Read",
+        "Location": "line 161",
+        "Method": "FirstOrDefaultAsync",
+        "RawSql": null
+      },
+      {
+        "Operation": "SAVE",
+        "Table": "",
+        "Type": "Write",
+        "Location": "line 169",
+        "Method": "SaveChangesAsync",
+        "RawSql": null
+      },
+      {
+        "Operation": "SELECT",
+        "Table": "UserSessions",
+        "Type": "Read",
+        "Location": "line 176",
+        "Method": "ToListAsync",
+        "RawSql": null
+      },
+      {
+        "Operation": "SAVE",
+        "Table": "",
+        "Type": "Write",
+        "Location": "line 188",
+        "Method": "SaveChangesAsync",
+        "RawSql": null
+      }
+    ],
+    "ExternalCalls": [
+      {
+        "Service": "MediatR",
+        "Operations": [
+          "ProcessUserActionCommandHandler",
+          "CreateUserSessionCommandHandler",
+          "UpdateUserProfileCommandHandler",
+          "ValidateUserDataQueryHandler",
+          "LogUserActivityCommandHandler",
+          "PerformMaintenanceCommandHandler"
+        ],
+        "Type": "MediatR",
+        "Locations": [
+          "line 69",
+          "line 85",
+          "line 119",
+          "line 60",
+          "line 67",
+          "line 114",
+          "line 123",
+          "line 143",
+          "line 146",
+          "line 37",
+          "line 71",
+          "line 91",
+          "line 49",
+          "line 63",
+          "line 78",
+          "line 98",
+          "line 120"
+        ]
+      }
+    ],
+    "TotalCallees": 168,
+    "MaxDepthReached": false,
+    "AnalyzedAt": "2026-04-20T14:05:44.4049258Z"
+  },
+  "FindCalleesFromLocation:GetUserDetails": {
+    "SourceMethod": "HomeController.GetUserDetails",
+    "Callees": [
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Controllers\\HomeController.cs",
+        "Line": 147,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 0
+      },
+      {
+        "Method": "IUserService.GetUserByIdAsync",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Controllers\\HomeController.cs",
+        "Line": 149,
+        "Column": 26,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 0
+      },
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\DatabaseUserService.cs",
+        "Line": 25,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "DbSet.FindAsync",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\DatabaseUserService.cs",
+        "Line": 26,
+        "Column": 22,
+        "CallType": "Database",
+        "TargetHandler": null,
+        "Operation": "SELECT",
+        "Entity": "Users",
+        "Depth": 1
+      },
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\MockUserService.cs",
+        "Line": 55,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "Enumerable.FirstOrDefault",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\MockUserService.cs",
+        "Line": 56,
+        "Column": 20,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "Task.FromResult",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\MockUserService.cs",
+        "Line": 57,
+        "Column": 16,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "CacheExtensions.TryGetValue",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\CacheUserService.cs",
+        "Line": 28,
+        "Column": 13,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\CacheUserService.cs",
+        "Line": 30,
+        "Column": 13,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\CacheUserService.cs",
+        "Line": 34,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "IUserService.GetUserByIdAsync",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\CacheUserService.cs",
+        "Line": 35,
+        "Column": 26,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "CacheExtensions.Set",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\CacheUserService.cs",
+        "Line": 38,
+        "Column": 13,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "ControllerBase.NotFound",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Controllers\\HomeController.cs",
+        "Line": 152,
+        "Column": 20,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 0
+      },
+      {
+        "Method": "IUserService.IsUserActiveAsync",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Controllers\\HomeController.cs",
+        "Line": 155,
+        "Column": 30,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 0
+      },
+      {
+        "Method": "DbSet.FindAsync",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\DatabaseUserService.cs",
+        "Line": 71,
+        "Column": 26,
+        "CallType": "Database",
+        "TargetHandler": null,
+        "Operation": "SELECT",
+        "Entity": "Users",
+        "Depth": 1
+      },
+      {
+        "Method": "Enumerable.FirstOrDefault",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\MockUserService.cs",
+        "Line": 123,
+        "Column": 20,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "Task.FromResult",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\MockUserService.cs",
+        "Line": 124,
+        "Column": 16,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "CacheUserService.GetUserByIdAsync",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\CacheUserService.cs",
+        "Line": 104,
+        "Column": 26,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "IUserService.GetTotalUserCountAsync",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Controllers\\HomeController.cs",
+        "Line": 156,
+        "Column": 32,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 0
+      },
+      {
+        "Method": "EntityFrameworkQueryableExtensions.CountAsync",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\DatabaseUserService.cs",
+        "Line": 77,
+        "Column": 22,
+        "CallType": "Database",
+        "TargetHandler": null,
+        "Operation": "SELECT",
+        "Entity": "Users",
+        "Depth": 1
+      },
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\MockUserService.cs",
+        "Line": 129,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "Task.FromResult",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\MockUserService.cs",
+        "Line": 130,
+        "Column": 16,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "CacheExtensions.TryGetValue",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\CacheUserService.cs",
+        "Line": 111,
+        "Column": 13,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\CacheUserService.cs",
+        "Line": 113,
+        "Column": 13,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\CacheUserService.cs",
+        "Line": 117,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "IUserService.GetTotalUserCountAsync",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\CacheUserService.cs",
+        "Line": 118,
+        "Column": 27,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "CacheExtensions.Set",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\CacheUserService.cs",
+        "Line": 119,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "TimeSpan.FromMinutes",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\CacheUserService.cs",
+        "Line": 119,
+        "Column": 37,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "ControllerBase.Ok",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Controllers\\HomeController.cs",
+        "Line": 158,
+        "Column": 16,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 0
+      }
+    ],
+    "DatabaseOperations": [
+      {
+        "Operation": "SELECT",
+        "Table": "Users",
+        "Type": "Read",
+        "Location": "line 26",
+        "Method": "FindAsync",
+        "RawSql": null
+      },
+      {
+        "Operation": "SELECT",
+        "Table": "Users",
+        "Type": "Read",
+        "Location": "line 71",
+        "Method": "FindAsync",
+        "RawSql": null
+      },
+      {
+        "Operation": "SELECT",
+        "Table": "Users",
+        "Type": "Read",
+        "Location": "line 77",
+        "Method": "CountAsync",
+        "RawSql": null
+      }
+    ],
+    "ExternalCalls": [],
+    "TotalCallees": 29,
+    "MaxDepthReached": false,
+    "AnalyzedAt": "2026-04-20T14:05:44.6610542Z"
+  },
+  "FindCalleesFromLocation:ManageUser": {
+    "SourceMethod": "HomeController.ManageUser",
+    "Callees": [
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Controllers\\HomeController.cs",
+        "Line": 175,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 0
+      },
+      {
+        "Method": "IUserService.CreateUserAsync",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Controllers\\HomeController.cs",
+        "Line": 180,
+        "Column": 37,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 0
+      },
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\DatabaseUserService.cs",
+        "Line": 43,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "DbSet.Add",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\DatabaseUserService.cs",
+        "Line": 44,
+        "Column": 9,
+        "CallType": "Database",
+        "TargetHandler": null,
+        "Operation": "INSERT",
+        "Entity": "Users",
+        "Depth": 1
+      },
+      {
+        "Method": "DbContext.SaveChangesAsync",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\DatabaseUserService.cs",
+        "Line": 45,
+        "Column": 15,
+        "CallType": "Database",
+        "TargetHandler": null,
+        "Operation": "SAVE",
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\MockUserService.cs",
+        "Line": 75,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "Enumerable.Any",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\MockUserService.cs",
+        "Line": 78,
+        "Column": 13,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "String.Equals",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\MockUserService.cs",
+        "Line": 78,
+        "Column": 29,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "List.Add",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\MockUserService.cs",
+        "Line": 85,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "Task.FromResult",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\MockUserService.cs",
+        "Line": 87,
+        "Column": 16,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "IUserService.CreateUserAsync",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\CacheUserService.cs",
+        "Line": 79,
+        "Column": 28,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "CacheUserService.InvalidateUserCaches",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\CacheUserService.cs",
+        "Line": 80,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "IMemoryCache.Remove",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\CacheUserService.cs",
+        "Line": 134,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 2
+      },
+      {
+        "Method": "IMemoryCache.Remove",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\CacheUserService.cs",
+        "Line": 135,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 2
+      },
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\CacheUserService.cs",
+        "Line": 136,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 2
+      },
+      {
+        "Method": "ControllerBase.Ok",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Controllers\\HomeController.cs",
+        "Line": 181,
+        "Column": 24,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 0
+      },
+      {
+        "Method": "IUserService.UpdateUserAsync",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Controllers\\HomeController.cs",
+        "Line": 183,
+        "Column": 37,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 0
+      },
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\DatabaseUserService.cs",
+        "Line": 51,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "DbSet.Update",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\DatabaseUserService.cs",
+        "Line": 53,
+        "Column": 9,
+        "CallType": "Database",
+        "TargetHandler": null,
+        "Operation": "UPDATE",
+        "Entity": "Users",
+        "Depth": 1
+      },
+      {
+        "Method": "DbContext.SaveChangesAsync",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\DatabaseUserService.cs",
+        "Line": 54,
+        "Column": 15,
+        "CallType": "Database",
+        "TargetHandler": null,
+        "Operation": "SAVE",
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\MockUserService.cs",
+        "Line": 92,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "Enumerable.FirstOrDefault",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\MockUserService.cs",
+        "Line": 94,
+        "Column": 28,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "Task.FromResult",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\MockUserService.cs",
+        "Line": 107,
+        "Column": 16,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "IUserService.UpdateUserAsync",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\CacheUserService.cs",
+        "Line": 86,
+        "Column": 28,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "CacheUserService.InvalidateUserCache",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\CacheUserService.cs",
+        "Line": 87,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "IMemoryCache.Remove",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\CacheUserService.cs",
+        "Line": 125,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 2
+      },
+      {
+        "Method": "IMemoryCache.Remove",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\CacheUserService.cs",
+        "Line": 126,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 2
+      },
+      {
+        "Method": "IMemoryCache.Remove",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\CacheUserService.cs",
+        "Line": 127,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 2
+      },
+      {
+        "Method": "IMemoryCache.Remove",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\CacheUserService.cs",
+        "Line": 128,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 2
+      },
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\CacheUserService.cs",
+        "Line": 129,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 2
+      },
+      {
+        "Method": "ControllerBase.Ok",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Controllers\\HomeController.cs",
+        "Line": 184,
+        "Column": 24,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 0
+      },
+      {
+        "Method": "IUserService.DeleteUserAsync",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Controllers\\HomeController.cs",
+        "Line": 186,
+        "Column": 37,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 0
+      },
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\DatabaseUserService.cs",
+        "Line": 60,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "DbSet.FindAsync",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\DatabaseUserService.cs",
+        "Line": 61,
+        "Column": 26,
+        "CallType": "Database",
+        "TargetHandler": null,
+        "Operation": "SELECT",
+        "Entity": "Users",
+        "Depth": 1
+      },
+      {
+        "Method": "DbSet.Remove",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\DatabaseUserService.cs",
+        "Line": 64,
+        "Column": 9,
+        "CallType": "Database",
+        "TargetHandler": null,
+        "Operation": "DELETE",
+        "Entity": "Users",
+        "Depth": 1
+      },
+      {
+        "Method": "DbContext.SaveChangesAsync",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\DatabaseUserService.cs",
+        "Line": 65,
+        "Column": 15,
+        "CallType": "Database",
+        "TargetHandler": null,
+        "Operation": "SAVE",
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\MockUserService.cs",
+        "Line": 112,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "Enumerable.FirstOrDefault",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\MockUserService.cs",
+        "Line": 114,
+        "Column": 20,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "Task.FromResult",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\MockUserService.cs",
+        "Line": 115,
+        "Column": 34,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "List.Remove",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\MockUserService.cs",
+        "Line": 117,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "Task.FromResult",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\MockUserService.cs",
+        "Line": 118,
+        "Column": 16,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "CacheUserService.GetUserByIdAsync",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\CacheUserService.cs",
+        "Line": 93,
+        "Column": 26,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "CacheExtensions.TryGetValue",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\CacheUserService.cs",
+        "Line": 28,
+        "Column": 13,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 2
+      },
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\CacheUserService.cs",
+        "Line": 30,
+        "Column": 13,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 2
+      },
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\CacheUserService.cs",
+        "Line": 34,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 2
+      },
+      {
+        "Method": "IUserService.GetUserByIdAsync",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\CacheUserService.cs",
+        "Line": 35,
+        "Column": 26,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 2
+      },
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\DatabaseUserService.cs",
+        "Line": 25,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "DbSet.FindAsync",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\DatabaseUserService.cs",
+        "Line": 26,
+        "Column": 22,
+        "CallType": "Database",
+        "TargetHandler": null,
+        "Operation": "SELECT",
+        "Entity": "Users",
+        "Depth": 3
+      },
+      {
+        "Method": "LoggerExtensions.LogInformation",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\MockUserService.cs",
+        "Line": 55,
+        "Column": 9,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "Enumerable.FirstOrDefault",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\MockUserService.cs",
+        "Line": 56,
+        "Column": 20,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "Task.FromResult",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\MockUserService.cs",
+        "Line": 57,
+        "Column": 16,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 3
+      },
+      {
+        "Method": "CacheExtensions.Set",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\CacheUserService.cs",
+        "Line": 38,
+        "Column": 13,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 2
+      },
+      {
+        "Method": "IUserService.DeleteUserAsync",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\CacheUserService.cs",
+        "Line": 94,
+        "Column": 28,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "CacheUserService.InvalidateUserCache",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Services\\CacheUserService.cs",
+        "Line": 97,
+        "Column": 13,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 1
+      },
+      {
+        "Method": "ControllerBase.Ok",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Controllers\\HomeController.cs",
+        "Line": 187,
+        "Column": 24,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 0
+      },
+      {
+        "Method": "ControllerBase.BadRequest",
+        "File": "C:\\dev\\roslyn-mcp\\dotnet-lsp-mcp\\tests\\integration\\ExampleApp\\MyApp\\Controllers\\HomeController.cs",
+        "Line": 189,
+        "Column": 24,
+        "CallType": "Method",
+        "TargetHandler": null,
+        "Operation": null,
+        "Entity": null,
+        "Depth": 0
+      }
+    ],
+    "DatabaseOperations": [
+      {
+        "Operation": "INSERT",
+        "Table": "Users",
+        "Type": "Write",
+        "Location": "line 44",
+        "Method": "Add",
+        "RawSql": null
+      },
+      {
+        "Operation": "SAVE",
+        "Table": "",
+        "Type": "Write",
+        "Location": "line 45",
+        "Method": "SaveChangesAsync",
+        "RawSql": null
+      },
+      {
+        "Operation": "UPDATE",
+        "Table": "Users",
+        "Type": "Write",
+        "Location": "line 53",
+        "Method": "Update",
+        "RawSql": null
+      },
+      {
+        "Operation": "SAVE",
+        "Table": "",
+        "Type": "Write",
+        "Location": "line 54",
+        "Method": "SaveChangesAsync",
+        "RawSql": null
+      },
+      {
+        "Operation": "SELECT",
+        "Table": "Users",
+        "Type": "Read",
+        "Location": "line 61",
+        "Method": "FindAsync",
+        "RawSql": null
+      },
+      {
+        "Operation": "DELETE",
+        "Table": "Users",
+        "Type": "Write",
+        "Location": "line 64",
+        "Method": "Remove",
+        "RawSql": null
+      },
+      {
+        "Operation": "SAVE",
+        "Table": "",
+        "Type": "Write",
+        "Location": "line 65",
+        "Method": "SaveChangesAsync",
+        "RawSql": null
+      },
+      {
+        "Operation": "SELECT",
+        "Table": "Users",
+        "Type": "Read",
+        "Location": "line 26",
+        "Method": "FindAsync",
+        "RawSql": null
+      }
+    ],
+    "ExternalCalls": [],
+    "TotalCallees": 56,
+    "MaxDepthReached": false,
+    "AnalyzedAt": "2026-04-20T14:05:44.9578671Z"
+  }
+}
