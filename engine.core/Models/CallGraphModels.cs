@@ -1,5 +1,3 @@
-using Microsoft.CodeAnalysis;
-
 namespace Engine.Models;
 
 public class CallersResult
@@ -49,7 +47,7 @@ public class CalleeInfo
     public string File { get; set; } = string.Empty;
     public int Line { get; set; }
     public int Column { get; set; }
-    public string CallType { get; set; } = string.Empty; // "Method", "Database", "MediatR", "External"
+    public string CallType { get; set; } = string.Empty;
     public string? TargetHandler { get; set; }
     public string? Operation { get; set; }
     public string? Entity { get; set; }
@@ -58,9 +56,9 @@ public class CalleeInfo
 
 public class DatabaseOperation
 {
-    public string Operation { get; set; } = string.Empty; // SELECT, INSERT, UPDATE, DELETE
+    public string Operation { get; set; } = string.Empty;
     public string Table { get; set; } = string.Empty;
-    public string Type { get; set; } = string.Empty; // Read, Write
+    public string Type { get; set; } = string.Empty;
     public string Location { get; set; } = string.Empty;
     public string Method { get; set; } = string.Empty;
     public string? RawSql { get; set; }
@@ -70,6 +68,6 @@ public class ExternalCall
 {
     public string Service { get; set; } = string.Empty;
     public IEnumerable<string> Operations { get; set; } = [];
-    public string Type { get; set; } = string.Empty; // MediatR, HttpClient, etc.
+    public string Type { get; set; } = string.Empty;
     public IEnumerable<string> Locations { get; set; } = [];
 }

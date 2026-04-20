@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>Engine.Core</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <!--
+    The core project is intentionally free of Roslyn references.
+    Adding Microsoft.CodeAnalysis.* here would defeat the purpose:
+    everything in this project must be unit-testable without a compilation.
+  -->
+
+</Project>
