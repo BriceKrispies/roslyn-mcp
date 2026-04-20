@@ -1,0 +1,92 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Publish ${{ matrix.rid }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            rid: win-x64
+            ext: .exe
+          - os: ubuntu-latest
+            rid: linux-x64
+            ext: ''
+          - os: macos-13
+            rid: osx-x64
+            ext: ''
+          - os: macos-14
+            rid: osx-arm64
+            ext: ''
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Compute version from tag
+        id: version
+        shell: bash
+        run: |
+          ref="${GITHUB_REF##*/}"
+          ver="${ref#v}"
+          # Fallback for workflow_dispatch (no tag).
+          case "$ver" in
+            [0-9]*) ;;
+            *) ver="0.0.0-dev" ;;
+          esac
+          echo "version=$ver" >> "$GITHUB_OUTPUT"
+
+      - name: Publish self-contained single-file
+        shell: bash
+        run: |
+          dotnet publish server/server.csproj \
+            -c Release \
+            -r ${{ matrix.rid }} \
+            --self-contained true \
+            -p:PublishSingleFile=true \
+            -p:IncludeNativeLibrariesForSelfExtract=true \
+            -p:EnableCompressionInSingleFile=true \
+            -p:DebugType=none \
+            -p:DebugSymbols=false \
+            -p:Version=${{ steps.version.outputs.version }} \
+            -o publish
+
+      - name: Rename asset
+        shell: bash
+        run: |
+          cd publish
+          mv "server${{ matrix.ext }}" "dotnet-lsp-mcp-${{ matrix.rid }}${{ matrix.ext }}"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dotnet-lsp-mcp-${{ matrix.rid }}
+          path: publish/dotnet-lsp-mcp-${{ matrix.rid }}${{ matrix.ext }}
+          if-no-files-found: error
+
+  release:
+    name: Publish GitHub release
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          merge-multiple: true
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: artifacts/*
+          generate_release_notes: true

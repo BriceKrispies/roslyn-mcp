@@ -4,9 +4,15 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Caching.Memory;
 using ModelContextProtocol.Server;
 using Engine.Services;
+using mcp_server;
 using mcp_server.Tools;
 using System;
 using System.ComponentModel;
+
+if (args.Length > 0 && args[0] == "update")
+{
+    return await SelfUpdater.RunUpdateCommandAsync();
+}
 
 var builder = Host.CreateApplicationBuilder(args);
 
@@ -33,6 +39,10 @@ builder.Services
 
 var app = builder.Build();
 
+// Kick off a background update check — logs a nudge to stderr if a newer
+// version is available on GitHub releases.
+SelfUpdater.CheckForUpdatesInBackground(app.Services.GetRequiredService<ILogger<Program>>());
+
 // Initialize cache service
 var cacheService = app.Services.GetRequiredService<ICacheService>();
 await cacheService.LoadFromDiskAsync();
@@ -57,6 +67,7 @@ lifetime.ApplicationStopping.Register(() =>
 });
 
 await app.RunAsync();
+return 0;
 
 [McpServerToolType]
 public static class EchoTool

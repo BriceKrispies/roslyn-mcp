@@ -6,7 +6,16 @@
     <RootNamespace>mcp_server</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <Version Condition="'$(Version)' == ''">0.0.0-dev</Version>
+    <UpdateRepo Condition="'$(UpdateRepo)' == ''">BriceKrispies/roslyn-mcp</UpdateRepo>
   </PropertyGroup>
+
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+      <_Parameter1>UpdateRepo</_Parameter1>
+      <_Parameter2>$(UpdateRepo)</_Parameter2>
+    </AssemblyAttribute>
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\engine\engine.csproj" />

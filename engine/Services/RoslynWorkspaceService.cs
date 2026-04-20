@@ -1,3 +1,4 @@
+using Microsoft.Build.Locator;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.MSBuild;
 using Microsoft.CodeAnalysis.Text;
@@ -8,6 +9,9 @@ namespace Engine.Services;
 
 public class RoslynWorkspaceService : IRoslynWorkspaceService, IDisposable
 {
+    private static readonly object _locatorLock = new();
+    private static bool _locatorRegistered;
+
     private readonly ILogger<RoslynWorkspaceService> _logger;
     private readonly ICacheService _cacheService;
     private readonly MSBuildWorkspace _workspace;
@@ -23,8 +27,24 @@ public class RoslynWorkspaceService : IRoslynWorkspaceService, IDisposable
     {
         _logger = logger;
         _cacheService = cacheService;
+        EnsureMSBuildLocated();
         _workspace = MSBuildWorkspace.Create();
         _workspaceFailedHandler = _workspace.RegisterWorkspaceFailedHandler(OnWorkspaceFailed);
+    }
+
+    // MSBuildWorkspace needs MSBuild assemblies (Microsoft.Build.*) loaded into
+    // the process. Locator finds the newest installed .NET SDK and wires them
+    // into the AssemblyLoadContext. Must run before any MSBuildWorkspace.Create
+    // call. Can only be called once per process, so we guard with a flag.
+    private static void EnsureMSBuildLocated()
+    {
+        if (_locatorRegistered) return;
+        lock (_locatorLock)
+        {
+            if (_locatorRegistered) return;
+            if (!MSBuildLocator.IsRegistered) MSBuildLocator.RegisterDefaults();
+            _locatorRegistered = true;
+        }
     }
 
     public async Task<bool> LoadSolutionAsync(string solutionPath, CancellationToken cancellationToken = default)

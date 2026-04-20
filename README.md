@@ -5,26 +5,65 @@ Roslyn-powered C# code analysis with two entry points: a stdio MCP server for AI
 ## Installation
 
 ### Prerequisites
-- .NET 10.0 SDK
-- A compatible MCP client (Cursor, Claude Desktop, etc.) — or just use the CLI
+- A .NET SDK installed (any recent version). The shipped binary is self-contained
+  for the .NET *runtime*, but `MSBuildWorkspace` still loads MSBuild assemblies
+  from an installed SDK at runtime. `Microsoft.Build.Locator` picks whichever
+  one it finds.
+- A compatible MCP client (Claude Code, Cursor, Claude Desktop, etc.) — or just use the CLI.
 
-### Build
+### Quick install (recommended)
+
+```bash
+# macOS / Linux
+curl -fsSL https://raw.githubusercontent.com/BriceKrispies/roslyn-mcp/main/install.sh | bash
+
+# Windows (PowerShell)
+iwr https://raw.githubusercontent.com/BriceKrispies/roslyn-mcp/main/install.ps1 -OutFile install.ps1; ./install.ps1
+```
+
+By default this installs the latest self-contained binary to a user-level
+location (`~/.local/bin/` on Unix, `%LOCALAPPDATA%\Programs\dotnet-lsp-mcp\`
+on Windows) and registers it with Claude Code at **user scope**, so the
+`dotnet-lsp` server is available in every project without per-project setup.
+If the `claude` CLI isn't on PATH, the script prints the `claude mcp add`
+command to run manually.
+
+For a **project-scoped** install (writes `.mcp.json` to the current directory
+instead), run the script with `--project` / `-Project`. Useful if you want to
+pin a specific binary to a specific repo.
+
+Env overrides: `REPO=<owner>/<repo>` to install from a fork, `INSTALL_DIR=<path>`
+to override the binary location.
+
+### Updates
+
+Re-run the install script any time to pull the latest, or use the built-in
+self-update:
+
+```bash
+dotnet-lsp-mcp update
+```
+
+On startup the server also checks GitHub releases in the background and logs
+a nudge to stderr if a newer version is available (visible in Claude Code's
+MCP server logs).
+
+### Build from source
 
 ```bash
 dotnet build server/server.csproj
 dotnet build engine.cli/engine.cli.csproj
 ```
 
-### MCP client config
+### Manual MCP client config
 
 ```json
 {
-  "mcp-csharp": {
-    "type": "stdio",
-    "command": "dotnet",
-    "args": ["run", "--project", "path/to/dotnet-lsp-mcp/server/server.csproj"],
-    "env": {
-      "SolutionPath": "path/to/your/solution.sln"
+  "mcpServers": {
+    "dotnet-lsp": {
+      "type": "stdio",
+      "command": "dotnet",
+      "args": ["run", "--project", "path/to/dotnet-lsp-mcp/server/server.csproj"]
     }
   }
 }
